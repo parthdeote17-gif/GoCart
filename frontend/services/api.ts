@@ -6,7 +6,7 @@
 const LOCAL_URL = "http://127.0.0.1:5000/api";
 
 // 2. Production URL (Tera Render wala backend)
-const PROD_URL = "https://gocart-0r8s.onrender.com/api";
+const PROD_URL = "https://gocart-6iyu.onrender.com";
 
 // ✅ AUTO-DETECTION: 
 // Agar app Vercel pe hai toh PROD use karega, 
