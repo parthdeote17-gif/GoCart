@@ -39,7 +39,7 @@ The core challenge of this project was managing a dataset of **40,000+ static pr
 * **Runtime:** Node.js
 * **Framework:** Express.js
 * **Authentication:** JWT (JSON Web Tokens)
-* **Emailing:** Nodemailer for OTP & notifications
+* **Emailing:** Brevo (Sendinblue) API via sib-api-v3-sdk for OTP & notificationss
 
 ### **Database**
 * **Engine:** PostgreSQL
@@ -89,8 +89,8 @@ Create a `.env` file in the backend folder:
 ```env
 DATABASE_URL=your_postgresql_connection_string
 JWT_SECRET=your_jwt_secret_key
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASS=your_app_password
+BREVO_API_KEY=your_brevo_api_key
+SMTP_FROM=your_verified_sender_email@domain.com
 
 ```
 
