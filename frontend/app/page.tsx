@@ -145,7 +145,7 @@ function HomeContent() {
               </div>
             </div>
 
-            {/* ✅ PROMOTIONAL BLOCKS (FIXED IMAGES WITH no-referrer) */}
+            {/* ✅ PROMOTIONAL BLOCKS */}
             {selectedCategory === "All" && (
               <div className="flex flex-wrap justify-center items-stretch gap-6 mb-16">
                 
@@ -211,13 +211,11 @@ function HomeContent() {
             {/* ✅ RANDOMIZED HORIZONTAL SCROLL ROWS */}
             {selectedCategory === "All" && products.length > 0 && (
               <div className="mb-16">
-                {/* Random slice 1 for Deals */}
                 <HorizontalScrollRow 
                   title="Top Deals This Week" 
                   products={[...products].reverse().slice(0, 10)} 
                   accentColor="from-violet-500 to-fuchsia-500" 
                 />
-                {/* Random slice 2 for Home Essentials */}
                 <HorizontalScrollRow 
                   title="Home Essentials" 
                   products={[...products].slice(10, 20)} 
@@ -415,51 +413,9 @@ function HorizontalScrollRow({ title, products, accentColor }: { title: string, 
       
       <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x">
         {rowProducts.map((p, idx) => {
-          // Robust fallback logic for images from your backend API
-          const imageSource = p.image || p.thumbnail || (p.images && p.images[0]) || "https://placehold.co/400x400/e2e8f0/64748b?text=No+Image";
+          
+          // ✅ FIX: Checking all possible image variable names from your database!
+          const imageSource = p.image || p.image_url || p.imageUrl || p.img || p.thumbnail || p.picture || (p.images && p.images[0]) || "https://placehold.co/400x400/f1f5f9/64748b?text=Image+Not+Found";
           
           return (
-            <Link key={idx} href={`/product/${p.id}`} className="snap-start shrink-0 w-[170px] bg-white rounded-2xl p-3 border border-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-slate-200 flex flex-col justify-between group">
-              <div className="bg-slate-50 rounded-xl p-2 mb-3 h-[130px] flex items-center justify-center overflow-hidden">
-                 <img 
-                   src={imageSource} 
-                   referrerPolicy="no-referrer" // ✅ Bypass Hotlinking Blocks
-                   onError={(e) => {
-                     // Fallback just in case URL is broken
-                     e.currentTarget.onerror = null; 
-                     e.currentTarget.src = "https://placehold.co/400x400/e2e8f0/64748b?text=Error";
-                   }}
-                   className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 mix-blend-multiply" 
-                   alt={p.title || "Product"} 
-                 />
-              </div>
-              <p className="text-[13px] font-bold text-slate-700 line-clamp-2 leading-tight min-h-[36px] text-center px-1">
-                {p.title || "Product Name"}
-              </p>
-            </Link>
-          )
-        })}
-        
-        {/* "See All" Card */}
-        <Link href="/" className={`snap-start shrink-0 w-[170px] bg-gradient-to-br ${accentColor} text-white rounded-2xl p-4 flex flex-col items-center justify-center shadow-md hover:-translate-y-2 hover:shadow-xl transition-all group`}>
-           <div className="bg-white/20 p-4 rounded-full mb-3 group-hover:scale-110 transition-transform">
-             <ArrowRight size={28} />
-           </div>
-           <span className="font-bold text-[14px] uppercase tracking-wider text-center">See All<br/>Offers</span>
-        </Link>
-      </div>
-    </div>
-  );
-}
-
-export default function HomePage() {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-[#f8fafc]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-indigo-600"></div>
-      </div>
-    }>
-      <HomeContent />
-    </Suspense>
-  );
-}
+            <Link key={idx} href={`/product/${p.id}`} className="snap-start shrink-0 w-[170px] bg-white rounded-2xl p-3 border border-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-slate-200 flex flex-col
