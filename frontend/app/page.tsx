@@ -11,7 +11,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import ProductCard from "@/components/ProductCard"; 
 import { useQuery } from "@tanstack/react-query"; 
 
-// ✅ SLIDER IMAGES KEPT AS ORIGINAL (NO EXTRA IMAGES ADDED HERE)
+// ✅ SLIDER IMAGES KEPT AS ORIGINAL
 const sliderImages = [
   "/banner1.png", 
   "/banner2.png",
@@ -99,15 +99,13 @@ function HomeContent() {
                     className={`absolute inset-0 transition-all duration-1000 ease-in-out ${index === currentSlide ? "opacity-100 scale-100" : "opacity-0 scale-105"}`}
                   >
                       <img src={img} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
-                      {/* Dark gradient overlay for text readability if needed */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-70"></div>
                   </div>
                ))}
 
-               <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-white/20 backdrop-blur-md border border-white/30 rounded-full text-white hover:bg-white hover:text-slate-900 transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 shadow-lg">
+               <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-white/40 backdrop-blur-md border border-white/30 rounded-full text-white hover:bg-white hover:text-slate-900 transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 shadow-lg">
                   <ChevronLeft size={24} />
                </button>
-               <button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-white/20 backdrop-blur-md border border-white/30 rounded-full text-white hover:bg-white hover:text-slate-900 transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 shadow-lg">
+               <button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-white/40 backdrop-blur-md border border-white/30 rounded-full text-white hover:bg-white hover:text-slate-900 transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110 shadow-lg">
                   <ChevronRight size={24} />
                </button>
 
@@ -122,31 +120,33 @@ function HomeContent() {
                </div>
             </div>
 
-            {/* ✅ CATEGORY SLIDER (Restored to original image style but with animation) */}
+            {/* ✅ CATEGORY SLIDER (Capsule Style exactly like image_5e78e3.png) */}
             <div className="w-full mb-12 relative px-2">
-              <div className="category-scroll-container pb-4">
-                <button 
-                  onClick={() => handleCategoryChange("All")} 
-                  className={`category-btn ${selectedCategory === "All" ? "active" : ""}`}
-                >
-                  All Products
-                </button>
-                {categories.map((cat: any) => (
+              <div className="max-w-6xl mx-auto bg-white rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-slate-100 p-2 overflow-hidden relative">
+                <div className="category-scroll-container">
                   <button 
-                    key={cat.category_name} 
-                    onClick={() => handleCategoryChange(cat.category_name)} 
-                    className={`category-btn ${selectedCategory === cat.category_name ? "active" : ""}`}
+                    onClick={() => handleCategoryChange("All")} 
+                    className={`category-btn ${selectedCategory === "All" ? "active" : ""}`}
                   >
-                    {cat.category_name}
+                    All Products
                   </button>
-                ))}
+                  {categories.map((cat: any) => (
+                    <button 
+                      key={cat.category_name} 
+                      onClick={() => handleCategoryChange(cat.category_name)} 
+                      className={`category-btn ${selectedCategory === cat.category_name ? "active" : ""}`}
+                    >
+                      {cat.category_name}
+                    </button>
+                  ))}
+                </div>
+                {/* Scroll Indicators */}
+                <div className="absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-white to-transparent pointer-events-none rounded-r-full"></div>
+                <div className="absolute left-0 top-0 h-full w-8 bg-gradient-to-r from-white to-transparent pointer-events-none rounded-l-full"></div>
               </div>
-              {/* Fade out edges for scroll indication */}
-              <div className="absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-[#f8fafc] to-transparent pointer-events-none"></div>
-              <div className="absolute left-0 top-0 h-full w-8 bg-gradient-to-r from-[#f8fafc] to-transparent pointer-events-none"></div>
             </div>
 
-            {/* ✅ MISSING PROMOTIONAL BLOCKS RESTORED (With Unsplash Images) */}
+            {/* ✅ PROMOTIONAL BLOCKS */}
             {selectedCategory === "All" && (
               <div className="flex flex-wrap justify-center items-stretch gap-6 mb-16">
                 
@@ -209,18 +209,28 @@ function HomeContent() {
               </div>
             )}
 
-            {/* ✅ MISSING HORIZONTAL SCROLL ROWS RESTORED */}
+            {/* ✅ RANDOMIZED HORIZONTAL SCROLL ROWS */}
             {selectedCategory === "All" && products.length > 0 && (
               <div className="mb-16">
-                <HorizontalScrollRow title="Top Deals This Week" products={products} accentColor="from-violet-500 to-fuchsia-500" />
-                <HorizontalScrollRow title="Home Essentials" products={products} accentColor="from-cyan-500 to-blue-500" />
+                {/* Random slice 1 for Deals */}
+                <HorizontalScrollRow 
+                  title="Top Deals This Week" 
+                  products={[...products].reverse().slice(0, 10)} 
+                  accentColor="from-violet-500 to-fuchsia-500" 
+                />
+                {/* Random slice 2 for Home Essentials */}
+                <HorizontalScrollRow 
+                  title="Home Essentials" 
+                  products={[...products].slice(10, 20)} 
+                  accentColor="from-cyan-500 to-blue-500" 
+                />
               </div>
             )}
 
           </div>
         )}
 
-        {/* --- MAIN CONTENT SECTION (Product Grid) --- */}
+        {/* --- MAIN CONTENT SECTION --- */}
         <section className="main-section" style={{ marginTop: searchQuery ? '9rem' : '0' }}>
           <div className="section-header">
             <div>
@@ -228,7 +238,7 @@ function HomeContent() {
                 {searchQuery ? (
                    <>Results for <span className="text-indigo-600">"{searchQuery}"</span></>
                 ) : (
-                   <>{selectedCategory === "All" ? "Trending Now" : selectedCategory} <span className="hot-badge">Hot</span></>
+                   <>{selectedCategory === "All" ? "Trending Now" : selectedCategory} <span className="hot-badge animate-pulse">Hot Deals</span></>
                 )}
               </h2>
             </div>
@@ -326,20 +336,20 @@ function HomeContent() {
         .blob-2 { bottom: 10%; right: -10%; width: 50vw; height: 50vw; background: #67e8f9; animation-delay: 2s; }
         .blob-3 { top: 40%; left: 20%; width: 40vw; height: 40vw; background: #fbcfe8; }
         
-        /* ✅ UPDATED CATEGORY SLIDER (Like the provided image) */
-        .category-scroll-container { display: flex; gap: 0.75rem; overflow-x: auto; padding: 0.5rem 0.25rem; width: 100%; scrollbar-width: none; align-items: center; }
+        /* ✅ EXACT CATEGORY SLIDER FROM IMAGE */
+        .category-scroll-container { display: flex; gap: 0.5rem; overflow-x: auto; width: 100%; scrollbar-width: none; align-items: center; }
         .category-scroll-container::-webkit-scrollbar { display: none; }
         
-        .category-btn { flex: 0 0 auto; white-space: nowrap; padding: 0.75rem 1.5rem; border-radius: 9999px; font-weight: 600; font-size: 0.95rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: none; background: #f1f5f9; color: #475569; }
-        .category-btn:hover:not(.active) { background: #e2e8f0; color: #0f172a; transform: translateY(-2px); }
-        .category-btn.active { background: #0f172a; color: #ffffff; box-shadow: 0 4px 15px rgba(15, 23, 42, 0.3); transform: scale(1.05); }
+        .category-btn { flex: 0 0 auto; white-space: nowrap; padding: 0.6rem 1.25rem; border-radius: 9999px; font-weight: 600; font-size: 0.9rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: none; background: #f1f5f9; color: #64748b; }
+        .category-btn:hover:not(.active) { background: #e2e8f0; color: #334155; transform: scale(1.02) translateY(-1px); }
+        .category-btn.active { background: #0f172a; color: #ffffff; box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2); transform: scale(1.05); }
 
         /* Main Elements */
         .main-section { max-width: 1500px; margin: 0 auto; padding: 0 1rem 6rem; width: 100%; }
         .section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2rem; padding: 0 0.5rem; }
         .section-title { font-size: 1.875rem; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 0.75rem; }
-        .hot-badge { font-size: 0.875rem; font-weight: 600; color: #ef4444; background: #fee2e2; padding: 0.125rem 0.75rem; border-radius: 9999px; border: 1px solid #fecaca; }
-        .page-badge { font-size: 0.875rem; font-weight: 600; color: #64748b; background: #ffffff; padding: 0.375rem 1rem; border-radius: 9999px; border: 1px solid #e2e8f0; shadow-sm; }
+        .hot-badge { font-size: 0.875rem; font-weight: 600; color: #ef4444; background: #fee2e2; padding: 0.25rem 0.75rem; border-radius: 9999px; border: 1px solid #fecaca; }
+        .page-badge { font-size: 0.875rem; font-weight: 600; color: #64748b; background: #ffffff; padding: 0.375rem 1rem; border-radius: 9999px; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         
         /* Grid */
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; }
@@ -387,39 +397,42 @@ function HomeContent() {
   );
 }
 
-// ✅ NEW: REUSABLE HORIZONTAL SCROLL COMPONENT
+// ✅ HORIZONTAL SCROLL COMPONENT WITH ANIMATIONS
 function HorizontalScrollRow({ title, products, accentColor }: { title: string, products: any[], accentColor: string }) {
-  const rowProducts = products.slice(0, 10);
+  // Defensive check if products array is valid
+  const rowProducts = Array.isArray(products) ? products.slice(0, 10) : [];
+
+  if (rowProducts.length === 0) return null;
 
   return (
-    <div className="bg-white relative mb-8 p-6 border border-slate-200 rounded-[2rem] shadow-sm">
+    <div className="bg-white relative mb-8 p-6 border border-slate-200 rounded-3xl shadow-sm hover:shadow-md transition-shadow duration-300">
       <div className={`absolute left-0 top-[30px] w-[6px] h-[35px] bg-gradient-to-b ${accentColor} rounded-r-md`}></div>
       
-      <h2 className="text-[22px] font-extrabold text-slate-800 mb-6 pl-4 flex items-center justify-between">
+      <h2 className="text-[20px] font-extrabold text-slate-800 mb-6 pl-4 flex items-center justify-between">
         {title}
-        <Link href="/" className="text-[14px] font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 group">
-          View All <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+        <Link href="/" className="text-[13px] font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 group bg-indigo-50 px-3 py-1.5 rounded-full">
+          View All <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
         </Link>
       </h2>
       
       <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x">
         {rowProducts.map((p, idx) => (
-          <Link key={idx} href={`/product/${p.id}`} className="snap-start shrink-0 w-[170px] bg-[#f8fafc] rounded-2xl p-4 border border-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-lg flex flex-col justify-between group">
-            <div className="bg-white rounded-xl p-2 mb-3 h-[130px] flex items-center justify-center shadow-sm">
+          <Link key={idx} href={`/product/${p.id}`} className="snap-start shrink-0 w-[170px] bg-white rounded-2xl p-3 border border-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-slate-200 flex flex-col justify-between group">
+            <div className="bg-slate-50 rounded-xl p-2 mb-3 h-[130px] flex items-center justify-center overflow-hidden">
                <img src={p.image || `https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop`} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" alt={p.title} />
             </div>
-            <p className="text-[13px] font-bold text-slate-700 line-clamp-2 leading-tight min-h-[36px] text-center">
+            <p className="text-[13px] font-bold text-slate-700 line-clamp-2 leading-tight min-h-[36px] text-center px-1">
               {p.title || "Product Name"}
             </p>
           </Link>
         ))}
         
-        {/* "See All" Card inside the scroll row */}
+        {/* "See All" Card */}
         <Link href="/" className={`snap-start shrink-0 w-[170px] bg-gradient-to-br ${accentColor} text-white rounded-2xl p-4 flex flex-col items-center justify-center shadow-md hover:-translate-y-2 hover:shadow-xl transition-all group`}>
            <div className="bg-white/20 p-4 rounded-full mb-3 group-hover:scale-110 transition-transform">
              <ArrowRight size={28} />
            </div>
-           <span className="font-bold text-[15px] uppercase tracking-wider text-center">See All<br/>Offers</span>
+           <span className="font-bold text-[14px] uppercase tracking-wider text-center">See All<br/>Offers</span>
         </Link>
       </div>
     </div>
