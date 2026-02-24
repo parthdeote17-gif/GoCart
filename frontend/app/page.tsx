@@ -418,4 +418,46 @@ function HorizontalScrollRow({ title, products, accentColor }: { title: string, 
           const imageSource = p.image || p.image_url || p.imageUrl || p.img || p.thumbnail || p.picture || (p.images && p.images[0]) || "https://placehold.co/400x400/f1f5f9/64748b?text=Image+Not+Found";
           
           return (
-            <Link key={idx} href={`/product/${p.id}`} className="snap-start shrink-0 w-[170px] bg-white rounded-2xl p-3 border border-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-slate-200 flex flex-col
+            <Link key={idx} href={`/product/${p.id}`} className="snap-start shrink-0 w-[170px] bg-white rounded-2xl p-3 border border-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-slate-200 flex flex-col justify-between group">
+              <div className="bg-white rounded-xl p-2 mb-3 h-[130px] flex items-center justify-center overflow-hidden">
+                 <img 
+                   src={imageSource} 
+                   referrerPolicy="no-referrer" /* ✅ FIX for Amazon/External Hotlink blocks */
+                   onError={(e) => {
+                     e.currentTarget.onerror = null; 
+                     e.currentTarget.src = "https://placehold.co/400x400/f1f5f9/ef4444?text=Error+Loading";
+                   }}
+                   className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" 
+                   alt={p.title || "Product"} 
+                 />
+              </div>
+              <p className="text-[13px] font-bold text-slate-700 line-clamp-2 leading-tight min-h-[36px] text-center px-1">
+                {p.title || "Product Name"}
+              </p>
+            </Link>
+          )
+        })}
+        
+        {/* "See All" Card */}
+        <Link href="/" className={`snap-start shrink-0 w-[170px] bg-gradient-to-br ${accentColor} text-white rounded-2xl p-4 flex flex-col items-center justify-center shadow-md hover:-translate-y-2 hover:shadow-xl transition-all group`}>
+           <div className="bg-white/20 p-4 rounded-full mb-3 group-hover:scale-110 transition-transform">
+             <ArrowRight size={28} />
+           </div>
+           <span className="font-bold text-[14px] uppercase tracking-wider text-center">See All<br/>Offers</span>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-[#f8fafc]">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-indigo-600"></div>
+      </div>
+    }>
+      <HomeContent />
+    </Suspense>
+  );
+}
