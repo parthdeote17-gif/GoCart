@@ -34,7 +34,6 @@ function HomeContent() {
 
   const isRandomFeed = !searchQuery; 
 
-  // ✅ CORE LOGIC UNTOUCHED
   const { data, isLoading } = useQuery({
     queryKey: ['products', selectedCategory, page, searchQuery, isRandomFeed], 
     queryFn: () => getProducts(selectedCategory, page, 30, searchQuery, isRandomFeed), 
@@ -146,7 +145,7 @@ function HomeContent() {
               </div>
             </div>
 
-            {/* ✅ PROMOTIONAL BLOCKS */}
+            {/* ✅ PROMOTIONAL BLOCKS (FIXED IMAGES WITH no-referrer) */}
             {selectedCategory === "All" && (
               <div className="flex flex-wrap justify-center items-stretch gap-6 mb-16">
                 
@@ -155,10 +154,10 @@ function HomeContent() {
                   <div className="bg-white p-5 h-full flex flex-col justify-between shadow-sm border border-slate-200 rounded-2xl transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
                     <h3 className="text-[17px] font-bold text-slate-800 mb-4">Revamp your home</h3>
                     <div className="grid grid-cols-2 gap-3 mt-2 flex-grow">
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1584100936595-c0654b55a2e6?w=500&q=80" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform" /> Cushions</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1544457070-4cd773b4d71e?w=500&q=80" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform" /> Decor</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1595514535415-8aeac6f66318?w=500&q=80" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform" /> Storage</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=500&q=80" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform" /> Lighting</div>
+                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1584100936595-c0654b55a2e6?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Cushions</div>
+                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1544457070-4cd773b4d71e?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Decor</div>
+                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1595514535415-8aeac6f66318?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Storage</div>
+                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Lighting</div>
                     </div>
                     <h4 className="mt-5 text-[14px] font-bold text-teal-600 flex items-center gap-1 group-hover:text-teal-800">Explore <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></h4>
                   </div>
@@ -169,10 +168,10 @@ function HomeContent() {
                   <div className="bg-white p-5 h-full flex flex-col justify-between shadow-sm border border-slate-200 rounded-2xl transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
                     <h3 className="text-[17px] font-bold text-slate-800 mb-4">Appliances | 55% off</h3>
                     <div className="grid grid-cols-2 gap-3 mt-2 flex-grow">
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1620288627223-53302f4e8c74?w=500&q=80" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform" /> ACs</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=500&q=80" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform" /> Washers</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1585659722983-38ca8da4e508?w=500&q=80" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform" /> Microwaves</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=500&q=80" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform" /> Fridges</div>
+                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1620288627223-53302f4e8c74?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> ACs</div>
+                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Washers</div>
+                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1585659722983-38ca8da4e508?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Microwaves</div>
+                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Fridges</div>
                     </div>
                     <h4 className="mt-5 text-[14px] font-bold text-indigo-600 flex items-center gap-1 group-hover:text-indigo-800">Explore <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></h4>
                   </div>
@@ -183,10 +182,10 @@ function HomeContent() {
                   <div className="bg-white p-5 h-full flex flex-col justify-between shadow-sm border border-slate-200 rounded-2xl transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
                     <h3 className="text-[17px] font-bold text-slate-800 mb-4">Latest Mobiles</h3>
                     <div className="grid grid-cols-2 gap-3 mt-2 flex-grow">
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform" /> Phones</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?w=500&q=80" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform" /> Buds</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500&q=80" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform" /> Speakers</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=500&q=80" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform" /> Headsets</div>
+                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Phones</div>
+                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Buds</div>
+                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Speakers</div>
+                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Headsets</div>
                     </div>
                     <h4 className="mt-5 text-[14px] font-bold text-amber-600 flex items-center gap-1 group-hover:text-amber-800">Explore <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></h4>
                   </div>
@@ -197,10 +196,10 @@ function HomeContent() {
                   <div className="bg-white p-5 h-full flex flex-col justify-between shadow-sm border border-slate-200 rounded-2xl transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
                     <h3 className="text-[17px] font-bold text-slate-800 mb-4">Fashion | 60% off</h3>
                     <div className="grid grid-cols-2 gap-3 mt-2 flex-grow">
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&q=80" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform" /> Casuals</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1594938291221-94f18cbb5660?w=500&q=80" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform" /> Formals</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1533313264027-ec1be93c78ce?w=500&q=80" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform" /> Winter</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1523206489230-c012c64b2b48?w=500&q=80" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform" /> Extras</div>
+                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Casuals</div>
+                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1594938291221-94f18cbb5660?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Formals</div>
+                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1533313264027-ec1be93c78ce?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Winter</div>
+                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1523206489230-c012c64b2b48?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Extras</div>
                     </div>
                     <h4 className="mt-5 text-[14px] font-bold text-pink-600 flex items-center gap-1 group-hover:text-pink-800">Explore <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></h4>
                   </div>
@@ -336,7 +335,7 @@ function HomeContent() {
         .blob-2 { bottom: 10%; right: -10%; width: 50vw; height: 50vw; background: #67e8f9; animation-delay: 2s; }
         .blob-3 { top: 40%; left: 20%; width: 40vw; height: 40vw; background: #fbcfe8; }
         
-        /* ✅ EXACT CATEGORY SLIDER FROM IMAGE */
+        /* Category Scroll Container */
         .category-scroll-container { display: flex; gap: 0.5rem; overflow-x: auto; width: 100%; scrollbar-width: none; align-items: center; }
         .category-scroll-container::-webkit-scrollbar { display: none; }
         
@@ -397,9 +396,8 @@ function HomeContent() {
   );
 }
 
-// ✅ HORIZONTAL SCROLL COMPONENT (UPDATED TO USE REAL PRODUCT IMAGES)
+// ✅ HORIZONTAL SCROLL COMPONENT (FIXED IMAGES)
 function HorizontalScrollRow({ title, products, accentColor }: { title: string, products: any[], accentColor: string }) {
-  // Defensive check if products array is valid
   const rowProducts = Array.isArray(products) ? products.slice(0, 10) : [];
 
   if (rowProducts.length === 0) return null;
@@ -416,18 +414,31 @@ function HorizontalScrollRow({ title, products, accentColor }: { title: string, 
       </h2>
       
       <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x">
-        {rowProducts.map((p, idx) => (
-          <Link key={idx} href={`/product/${p.id}`} className="snap-start shrink-0 w-[170px] bg-white rounded-2xl p-3 border border-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-slate-200 flex flex-col justify-between group">
-            <div className="bg-slate-50 rounded-xl p-2 mb-3 h-[130px] flex items-center justify-center overflow-hidden">
-               {/* ✅ USING REAL PRODUCT IMAGE FROM BACKEND DATA (p.image) */}
-               {/* Make sure your product object has a property named 'image' with the URL */}
-               <img src={p.image} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" alt={p.title} />
-            </div>
-            <p className="text-[13px] font-bold text-slate-700 line-clamp-2 leading-tight min-h-[36px] text-center px-1">
-              {p.title || "Product Name"}
-            </p>
-          </Link>
-        ))}
+        {rowProducts.map((p, idx) => {
+          // Robust fallback logic for images from your backend API
+          const imageSource = p.image || p.thumbnail || (p.images && p.images[0]) || "https://placehold.co/400x400/e2e8f0/64748b?text=No+Image";
+          
+          return (
+            <Link key={idx} href={`/product/${p.id}`} className="snap-start shrink-0 w-[170px] bg-white rounded-2xl p-3 border border-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-slate-200 flex flex-col justify-between group">
+              <div className="bg-slate-50 rounded-xl p-2 mb-3 h-[130px] flex items-center justify-center overflow-hidden">
+                 <img 
+                   src={imageSource} 
+                   referrerPolicy="no-referrer" // ✅ Bypass Hotlinking Blocks
+                   onError={(e) => {
+                     // Fallback just in case URL is broken
+                     e.currentTarget.onerror = null; 
+                     e.currentTarget.src = "https://placehold.co/400x400/e2e8f0/64748b?text=Error";
+                   }}
+                   className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 mix-blend-multiply" 
+                   alt={p.title || "Product"} 
+                 />
+              </div>
+              <p className="text-[13px] font-bold text-slate-700 line-clamp-2 leading-tight min-h-[36px] text-center px-1">
+                {p.title || "Product Name"}
+              </p>
+            </Link>
+          )
+        })}
         
         {/* "See All" Card */}
         <Link href="/" className={`snap-start shrink-0 w-[170px] bg-gradient-to-br ${accentColor} text-white rounded-2xl p-4 flex flex-col items-center justify-center shadow-md hover:-translate-y-2 hover:shadow-xl transition-all group`}>
