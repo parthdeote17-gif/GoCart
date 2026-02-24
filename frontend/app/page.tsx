@@ -33,9 +33,14 @@ function HomeContent() {
 
   const [categories, setCategories] = useState<any[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
+  
+  // ✅ NEW: SEPARATE STATES FOR HORIZONTAL ROWS SO THEY DON'T DUPLICATE MAIN GRID
+  const [topDeals, setTopDeals] = useState<any[]>([]);
+  const [homeEssentials, setHomeEssentials] = useState<any[]>([]);
 
   const isRandomFeed = !searchQuery; 
 
+  // Main Grid Data
   const { data, isLoading } = useQuery({
     queryKey: ['products', selectedCategory, page, searchQuery, isRandomFeed], 
     queryFn: () => getProducts(selectedCategory, page, 30, searchQuery, isRandomFeed), 
@@ -45,9 +50,18 @@ function HomeContent() {
   const products = data?.products || [];
   const totalPages = data?.pagination?.totalPages || 1;
 
+  // ✅ Fetch categories and distinct products for horizontal rows on mount
   useEffect(() => {
     getCategories().then((data) => {
       setCategories(Array.isArray(data) ? data : []);
+    });
+
+    // Fetching page 2 & 3 data specifically for horizontal rows so they are different from page 1 grid
+    getProducts("All", 2, 10, "", true).then((res) => {
+      if (res?.products) setTopDeals(res.products);
+    });
+    getProducts("All", 3, 10, "", true).then((res) => {
+      if (res?.products) setHomeEssentials(res.products);
     });
   }, []);
 
@@ -209,19 +223,23 @@ function HomeContent() {
               </div>
             )}
 
-            {/* ✅ RANDOMIZED HORIZONTAL SCROLL ROWS */}
-            {selectedCategory === "All" && products.length > 0 && (
+            {/* ✅ HORIZONTAL SCROLL ROWS (Now using distinct state data!) */}
+            {selectedCategory === "All" && (
               <div className="mb-16">
-                <HorizontalScrollRow 
-                  title="Top Deals This Week" 
-                  products={[...products].reverse().slice(0, 10)} 
-                  accentColor="from-violet-500 to-fuchsia-500" 
-                />
-                <HorizontalScrollRow 
-                  title="Home Essentials" 
-                  products={[...products].slice(10, 20)} 
-                  accentColor="from-cyan-500 to-blue-500" 
-                />
+                {topDeals.length > 0 && (
+                  <HorizontalScrollRow 
+                    title="Top Deals This Week" 
+                    products={topDeals} 
+                    accentColor="from-violet-500 to-fuchsia-500" 
+                  />
+                )}
+                {homeEssentials.length > 0 && (
+                  <HorizontalScrollRow 
+                    title="Home Essentials" 
+                    products={homeEssentials} 
+                    accentColor="from-cyan-500 to-blue-500" 
+                  />
+                )}
               </div>
             )}
 
@@ -415,7 +433,7 @@ function HorizontalScrollRow({ title, products, accentColor }: { title: string, 
       <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x">
         {rowProducts.map((p, idx) => {
           
-          /* ✅ ROBUST DATASET IMAGE EXTRACTION (Same as ProductCard) */
+          /* ✅ ROBUST DATASET IMAGE EXTRACTION */
           let imageSource = "";
 
           if (p?.images && Array.isArray(p.images) && p.images.length > 0) {
