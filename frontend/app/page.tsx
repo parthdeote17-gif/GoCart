@@ -33,7 +33,6 @@ function HomeContent() {
 
   const isRandomFeed = !searchQuery; 
 
-  // Core Logic Kept Intact
   const { data, isLoading } = useQuery({
     queryKey: ['products', selectedCategory, page, searchQuery, isRandomFeed], 
     queryFn: () => getProducts(selectedCategory, page, 30, searchQuery, isRandomFeed), 
@@ -77,60 +76,57 @@ function HomeContent() {
   };
 
   return (
-    <div className="relative min-h-screen bg-slate-50 text-slate-900 font-sans overflow-x-hidden selection:bg-indigo-500 selection:text-white">
+    <div className="relative min-h-screen bg-[#f8fafc] text-[#0f172a] font-sans overflow-x-hidden">
       
-      {/* Enhanced Animated Background Blobs */}
+      {/* Background Blobs - Kept Subtle but behind everything */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div className="blob blob-1"></div>
         <div className="blob blob-2"></div>
         <div className="blob blob-3"></div>
-        <div className="absolute inset-0 bg-slate-50/40 backdrop-blur-[80px]"></div>
       </div>
 
       <div className="relative z-10 w-full">
         {!searchQuery && (
-          <div className="max-w-[1500px] mx-auto px-4 sm:px-6 w-full pt-28">
+          <div className="max-w-[1500px] mx-auto px-4 w-full pt-32">
             
-            {/* Modernized Image Slider with Ken Burns Effect */}
-            <div className="relative w-full h-[350px] md:h-[550px] overflow-hidden mb-12 mx-auto rounded-[2rem] shadow-2xl shadow-indigo-500/10 group">
+            {/* Slider - ✅ RESTORED ORIGINAL SIZE (300px mobile / 500px desktop) */}
+            <div className="relative w-full h-[300px] md:h-[500px] overflow-hidden mb-10 mx-auto rounded-3xl shadow-2xl group bg-gray-200">
                {sliderImages.map((img, index) => (
                   <div 
                     key={index}
-                    className={`absolute inset-0 transition-all duration-[2000ms] ease-out ${
-                      index === currentSlide ? "opacity-100 scale-100" : "opacity-0 scale-110"
+                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                      index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
                     }`}
                   >
                       <img src={img} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
-                      {/* Beautiful Gradient Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+                      {/* Gradient overlay for text readability on slide if needed */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-60"></div>
                   </div>
                ))}
 
-               {/* Modern Navigation Controls */}
-               <button onClick={prevSlide} className="absolute left-6 top-1/2 -translate-y-1/2 p-3 bg-white/20 backdrop-blur-xl border border-white/30 rounded-full text-white hover:bg-white hover:text-indigo-600 hover:scale-110 transition-all duration-300 opacity-0 group-hover:opacity-100 shadow-lg">
-                  <ChevronLeft size={24} strokeWidth={2.5} />
+               <button onClick={prevSlide} className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 bg-white/90 rounded-full text-black hover:bg-white hover:scale-110 transition-all opacity-0 group-hover:opacity-100 shadow-lg">
+                  <ChevronLeft size={24} />
                </button>
-               <button onClick={nextSlide} className="absolute right-6 top-1/2 -translate-y-1/2 p-3 bg-white/20 backdrop-blur-xl border border-white/30 rounded-full text-white hover:bg-white hover:text-indigo-600 hover:scale-110 transition-all duration-300 opacity-0 group-hover:opacity-100 shadow-lg">
-                  <ChevronRight size={24} strokeWidth={2.5} />
+               <button onClick={nextSlide} className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 bg-white/90 rounded-full text-black hover:bg-white hover:scale-110 transition-all opacity-0 group-hover:opacity-100 shadow-lg">
+                  <ChevronRight size={24} />
                </button>
 
-               {/* Sleek Pagination Dots */}
-               <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 bg-black/20 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
+               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
                   {sliderImages.map((_, index) => (
                       <button 
                         key={index}
                         onClick={() => setCurrentSlide(index)}
-                        className={`h-2 rounded-full transition-all duration-500 ${
-                          index === currentSlide ? "bg-white w-8 shadow-[0_0_10px_rgba(255,255,255,0.8)]" : "bg-white/40 w-2 hover:bg-white/70"
+                        className={`transition-all duration-300 rounded-full shadow-sm ${
+                          index === currentSlide ? "bg-white w-8 h-2" : "bg-white/60 w-2 h-2 hover:bg-white"
                         }`}
                       />
                   ))}
                </div>
             </div>
 
-            {/* Glassmorphism Category Bar */}
+            {/* Category Bar - ✅ Solid Background (Not Faint) */}
             <div className="w-full mb-16 relative">
-              <div className="w-full overflow-hidden relative group rounded-2xl bg-white/60 backdrop-blur-xl border border-white shadow-sm p-3">
+              <div className="w-full overflow-hidden relative group rounded-2xl bg-white border border-slate-200 shadow-sm p-3">
                 <div className="category-scroll-container">
                   <button 
                     onClick={() => handleCategoryChange("All")} 
@@ -148,38 +144,37 @@ function HomeContent() {
                     </button>
                   ))}
                 </div>
-                {/* Fade out effect for scroll edges */}
-                <div className="absolute right-0 top-0 h-full w-20 bg-gradient-to-l from-white/80 to-transparent pointer-events-none rounded-r-2xl"></div>
+                {/* Fade effect on the right edge */}
+                <div className="absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-white to-transparent pointer-events-none md:hidden"></div>
               </div>
             </div>
           </div>
         )}
 
-        <section className="max-w-[1500px] mx-auto px-4 sm:px-6 pb-24" style={{ marginTop: searchQuery ? '9rem' : '0' }}>
+        <section className="max-w-[1500px] mx-auto px-4 pb-24" style={{ marginTop: searchQuery ? '9rem' : '0' }}>
           
-          {/* Animated Section Header */}
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
+          {/* Section Header - ✅ High Contrast Text */}
+          <div className="flex items-end justify-between mb-8 px-2">
             <div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold flex items-center gap-3 tracking-tight">
+              <h2 className="text-3xl font-bold text-slate-900 flex items-center gap-2">
                 {searchQuery ? (
-                   <>Results for <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-fuchsia-600">"{searchQuery}"</span></>
+                   <>Results for <span className="text-indigo-600">"{searchQuery}"</span></>
                 ) : (
-                   <span className="text-slate-800">
+                   <>
                      {selectedCategory === "All" ? "Trending Now" : selectedCategory} 
-                     <span className="ml-3 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r from-orange-400 to-rose-500 text-white shadow-sm transform -translate-y-1">
-                       Hot 🔥
+                     <span className="text-sm font-medium bg-rose-100 text-rose-600 px-2 py-1 rounded-md border border-rose-200">
+                       Hot
                      </span>
-                   </span>
+                   </>
                 )}
               </h2>
             </div>
-            <span className="px-4 py-1.5 rounded-full text-sm font-bold text-slate-500 bg-white border border-slate-200 shadow-sm flex items-center gap-2">
-              Page <span className="text-indigo-600">{page}</span> of {totalPages}
+            <span className="hidden md:block px-3 py-1 rounded-full text-sm font-semibold text-slate-600 bg-white border border-slate-200 shadow-sm">
+              Page {page} of {totalPages}
             </span>
           </div>
 
           {isLoading ? (
-            /* Premium Skeleton Loading */
             <div className="product-grid">
               {[...Array(12)].map((_, i) => (
                 <div key={i} className="skeleton-card">
@@ -190,15 +185,12 @@ function HomeContent() {
               ))}
             </div>
           ) : products.length === 0 ? (
-            /* Beautiful Empty State */
-            <div className="flex flex-col items-center justify-center p-16 text-center bg-white/50 backdrop-blur-xl border border-white rounded-[2rem] shadow-sm max-w-3xl mx-auto">
-              <div className="w-24 h-24 bg-indigo-50 rounded-full flex items-center justify-center mb-6 shadow-inner">
-                <SearchX size={48} className="text-indigo-400" />
-              </div>
-              <h2 className="text-2xl font-bold text-slate-800 mb-3">Oops! Nothing found</h2>
-              <p className="text-slate-500 mb-8 max-w-md">We couldn't find any products matching your current filters. Try adjusting your search or exploring our categories.</p>
-              <button onClick={() => router.push(`/`)} className="px-8 py-3.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-slate-900/20 active:scale-95">
-                Clear All Filters
+            <div className="flex flex-col items-center justify-center p-16 text-center bg-white border border-slate-200 rounded-3xl shadow-sm">
+              <div className="text-6xl mb-4">🛍️</div>
+              <h2 className="text-2xl font-bold text-slate-800 mb-2">No products found</h2>
+              <p className="text-slate-500 mb-6">Try adjusting your search or filter to find what you're looking for.</p>
+              <button onClick={() => router.push(`/`)} className="px-6 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-colors shadow-md">
+                Clear Search & Filters
               </button>
             </div>
           ) : (
@@ -212,27 +204,25 @@ function HomeContent() {
                 ))}
               </div>
 
-              {/* Modern Pagination */}
-              <div className="flex justify-center items-center gap-4 mt-20">
+              {/* Pagination - ✅ High Contrast Buttons */}
+              <div className="flex justify-center items-center gap-4 mt-16">
                 <button 
                   disabled={page === 1}
                   onClick={() => handlePageChange(Math.max(1, page - 1))}
-                  className={`page-btn ${page === 1 ? "opacity-50 cursor-not-allowed" : "hover:-translate-x-1 hover:shadow-md hover:text-indigo-600"}`}
+                  className={`page-btn ${page === 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-slate-50 hover:text-indigo-600 hover:border-indigo-200"}`}
                 >
                   <ArrowRight size={18} className="rotate-180" />
-                  Previous
+                  Prev
                 </button>
                 
-                <div className="px-5 py-2.5 bg-white font-bold rounded-xl border border-slate-200 shadow-sm flex items-center gap-2">
-                  <span className="text-indigo-600 text-lg">{page}</span> 
-                  <span className="text-slate-300">/</span> 
-                  <span className="text-slate-600">{totalPages}</span>
+                <div className="px-4 py-2 bg-white font-bold rounded-xl border border-slate-200 text-indigo-600 shadow-sm">
+                  {page} <span className="text-slate-400 font-normal mx-1">/</span> {totalPages}
                 </div>
 
                 <button 
                   disabled={page >= totalPages}
                   onClick={() => handlePageChange(page + 1)}
-                  className={`page-btn-next ${page >= totalPages ? "opacity-50 cursor-not-allowed" : "hover:translate-x-1 hover:shadow-lg hover:shadow-indigo-600/20"}`}
+                  className={`page-btn-next ${page >= totalPages ? "opacity-50 cursor-not-allowed" : "hover:bg-slate-800 shadow-lg"}`}
                 >
                   Next
                   <ArrowRight size={18} />
@@ -242,21 +232,21 @@ function HomeContent() {
           )}
         </section>
 
-        {/* Feature Section with Hover Lift */}
-        <section className="max-w-[1500px] mx-auto px-4 sm:px-6 pb-20">
-          <div className="bg-white/60 backdrop-blur-2xl border border-white/80 rounded-[2.5rem] p-10 md:p-14 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-16">
+        {/* Feature Section - ✅ Solid White Cards (Not Faint) */}
+        <section className="max-w-[1500px] mx-auto px-4 pb-20">
+          <div className="bg-white border border-slate-200 rounded-[2.5rem] p-10 md:p-14 shadow-xl shadow-slate-200/50">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-16 text-center">
               {[
-                { title: "Lightning Delivery", desc: "Get your products delivered within 24 hours globally.", color: "from-violet-500 to-fuchsia-500", shadow: "shadow-violet-500/20", bg: "bg-violet-50", text: "text-violet-600", Icon: Zap },
-                { title: "100% Secure Payments", desc: "Your transactions are protected by bank-level encryption.", color: "from-fuchsia-500 to-rose-500", shadow: "shadow-fuchsia-500/20", bg: "bg-fuchsia-50", text: "text-fuchsia-600", Icon: Heart },
-                { title: "24/7 Premium Support", desc: "Our dedicated team is here to help you anytime.", color: "from-cyan-500 to-blue-500", shadow: "shadow-cyan-500/20", bg: "bg-cyan-50", text: "text-cyan-600", Icon: ShoppingBag }
+                { title: "Instant Delivery", desc: "Get products delivered within 24 hours.", color: "bg-violet-50 text-violet-600", Icon: Zap },
+                { title: "Secure Payments", desc: "100% secure payment gateway.", color: "bg-fuchsia-50 text-fuchsia-600", Icon: Heart },
+                { title: "24/7 Support", desc: "Dedicated support team for you.", color: "bg-cyan-50 text-cyan-600", Icon: ShoppingBag }
               ].map((feature, i) => (
-                <div key={i} className="group flex flex-col items-center text-center p-6 rounded-3xl transition-all duration-300 hover:bg-white hover:shadow-xl hover:-translate-y-2 cursor-default">
-                  <div className={`w-20 h-20 rounded-2xl flex items-center justify-center mb-6 ${feature.bg} ${feature.text} shadow-lg ${feature.shadow} transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3`}>
-                    <feature.Icon size={36} strokeWidth={2} />
+                <div key={i} className="flex flex-col items-center group">
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-5 ${feature.color} transition-transform duration-300 group-hover:scale-110`}>
+                    <feature.Icon size={30} strokeWidth={2.5} />
                   </div>
-                  <h4 className="text-xl font-bold text-slate-800 mb-3">{feature.title}</h4>
-                  <p className="text-slate-500 leading-relaxed">{feature.desc}</p>
+                  <h4 className="text-lg font-bold text-slate-900 mb-2">{feature.title}</h4>
+                  <p className="text-slate-500 text-sm max-w-[200px]">{feature.desc}</p>
                 </div>
               ))}
             </div>
@@ -266,42 +256,39 @@ function HomeContent() {
       </div>
 
       <style jsx global>{`
-        /* Refined Animations */
-        @keyframes pulse-subtle { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
-        @keyframes float { 0% { transform: translateY(0px) scale(1); } 50% { transform: translateY(-20px) scale(1.05); } 100% { transform: translateY(0px) scale(1); } }
+        /* Core Animations */
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
         
-        /* Ambient Background Blobs */
-        .blob { position: absolute; border-radius: 50%; filter: blur(150px); opacity: 0.5; animation: float 10s ease-in-out infinite; mix-blend-mode: multiply; }
-        .blob-1 { top: -10%; left: -10%; width: 800px; height: 800px; background: #c4b5fd; animation-duration: 12s; }
-        .blob-2 { bottom: 10%; right: -10%; width: 600px; height: 600px; background: #a5f3fc; animation-duration: 15s; animation-delay: 2s; }
-        .blob-3 { top: 30%; left: 30%; width: 500px; height: 500px; background: #fbcfe8; animation-duration: 10s; animation-delay: 5s; }
+        /* Background Blobs - Slightly muted to prevent washing out text */
+        .blob { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.25; animation: float 8s ease-in-out infinite; }
+        .blob-1 { top: -10%; left: -10%; width: 600px; height: 600px; background: #a855f7; }
+        .blob-2 { bottom: 10%; right: -10%; width: 500px; height: 500px; background: #22d3ee; animation-delay: 2s; }
+        .blob-3 { top: 40%; left: 20%; width: 300px; height: 300px; background: #f472b6; }
         
-        /* Custom Scrollbar for Categories */
-        .category-scroll-container { display: flex; gap: 0.75rem; overflow-x: auto; padding: 0.5rem; width: 100%; scrollbar-width: none; -ms-overflow-style: none; }
+        /* Category Scroll */
+        .category-scroll-container { display: flex; gap: 0.75rem; overflow-x: auto; padding: 0.25rem; width: 100%; scrollbar-width: none; }
         .category-scroll-container::-webkit-scrollbar { display: none; }
         
-        /* Modernized Category Buttons */
-        .category-btn { flex: 0 0 auto; white-space: nowrap; padding: 0.6rem 1.75rem; border-radius: 9999px; font-weight: 600; font-size: 0.95rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: 1px solid #e2e8f0; background: rgba(255, 255, 255, 0.9); color: #64748b; }
-        .category-btn:hover:not(.active) { background: #f8fafc; color: #334155; transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-        .category-btn.active { border-color: transparent; background: linear-gradient(135deg, #6366f1, #a855f7); color: #ffffff; box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4); transform: scale(1.05); }
+        /* Category Buttons - High Contrast */
+        .category-btn { flex: 0 0 auto; white-space: nowrap; padding: 0.6rem 1.5rem; border-radius: 9999px; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; cursor: pointer; border: 1px solid #e2e8f0; background: #f1f5f9; color: #64748b; }
+        .category-btn:hover { background: #e2e8f0; color: #334155; }
+        .category-btn.active { border-color: transparent; background: #0f172a; color: #ffffff; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.3); transform: scale(1.05); }
         
-        /* Grid Layouts */
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2rem; }
+        /* Grid */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; }
         
-        /* Premium Buttons */
-        .page-btn { padding: 0.8rem 1.5rem; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 1rem; font-weight: 600; color: #475569; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 0.5rem; }
-        .page-btn-next { padding: 0.8rem 1.5rem; background: #0f172a; border: 1px solid transparent; border-radius: 1rem; font-weight: 600; color: #ffffff; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 0.5rem; }
+        /* Pagination Buttons */
+        .page-btn { padding: 0.75rem 1.5rem; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 0.75rem; font-weight: 700; color: #64748b; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+        .page-btn-next { padding: 0.75rem 1.5rem; background: #0f172a; border: none; border-radius: 0.75rem; font-weight: 700; color: #ffffff; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
         
-        /* Refined Skeleton Loader */
-        .skeleton-card { aspect-ratio: 3/4; background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px); border-radius: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.8); padding: 1.25rem; animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-        .skeleton-img { width: 100%; height: 75%; background: #e2e8f0; border-radius: 1rem; margin-bottom: 1.25rem; }
-        .skeleton-text { height: 1.25rem; background: #e2e8f0; border-radius: 0.375rem; }
+        /* Skeleton */
+        .skeleton-card { aspect-ratio: 3/4; background: #ffffff; border-radius: 1.5rem; border: 1px solid #f1f5f9; padding: 1rem; }
+        .skeleton-img { width: 100%; height: 70%; background: #f1f5f9; border-radius: 1rem; margin-bottom: 1rem; }
+        .skeleton-text { height: 1rem; background: #f1f5f9; border-radius: 0.25rem; }
         
         @media (max-width: 768px) {
           .product-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-        }
-        @media (max-width: 480px) {
-          .product-grid { grid-template-columns: 1fr; }
+          .page-btn, .page-btn-next { padding: 0.6rem 1rem; font-size: 0.9rem; }
         }
       `}</style>
     </div>
@@ -311,11 +298,8 @@ function HomeContent() {
 export default function HomePage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <div className="relative">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-indigo-600"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-8 w-8 bg-indigo-100 rounded-full"></div>
-        </div>
+      <div className="min-h-screen flex items-center justify-center bg-[#f8fafc]">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-indigo-600"></div>
       </div>
     }>
       <HomeContent />
