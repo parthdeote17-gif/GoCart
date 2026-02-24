@@ -120,7 +120,7 @@ function HomeContent() {
                </div>
             </div>
 
-            {/* ✅ CATEGORY SLIDER (Capsule Style exactly like image_5e78e3.png) */}
+            {/* ✅ CATEGORY SLIDER (Capsule Style) */}
             <div className="w-full mb-12 relative px-2">
               <div className="max-w-6xl mx-auto bg-white rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-slate-100 p-2 overflow-hidden relative">
                 <div className="category-scroll-container">
@@ -397,7 +397,7 @@ function HomeContent() {
   );
 }
 
-// ✅ HORIZONTAL SCROLL COMPONENT WITH ANIMATIONS
+// ✅ HORIZONTAL SCROLL COMPONENT (UPDATED TO USE REAL PRODUCT IMAGES)
 function HorizontalScrollRow({ title, products, accentColor }: { title: string, products: any[], accentColor: string }) {
   // Defensive check if products array is valid
   const rowProducts = Array.isArray(products) ? products.slice(0, 10) : [];
@@ -419,7 +419,9 @@ function HorizontalScrollRow({ title, products, accentColor }: { title: string, 
         {rowProducts.map((p, idx) => (
           <Link key={idx} href={`/product/${p.id}`} className="snap-start shrink-0 w-[170px] bg-white rounded-2xl p-3 border border-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-slate-200 flex flex-col justify-between group">
             <div className="bg-slate-50 rounded-xl p-2 mb-3 h-[130px] flex items-center justify-center overflow-hidden">
-               <img src={p.image || `https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop`} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" alt={p.title} />
+               {/* ✅ USING REAL PRODUCT IMAGE FROM BACKEND DATA (p.image) */}
+               {/* Make sure your product object has a property named 'image' with the URL */}
+               <img src={p.image} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" alt={p.title} />
             </div>
             <p className="text-[13px] font-bold text-slate-700 line-clamp-2 leading-tight min-h-[36px] text-center px-1">
               {p.title || "Product Name"}
