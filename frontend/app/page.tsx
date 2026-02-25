@@ -247,7 +247,7 @@ function HomeContent() {
                   accentColor="from-violet-500 to-fuchsia-500" 
                 />
                 <HorizontalScrollRow 
-                  title="Home Essentials" 
+                  title="Bestsellers" 
                   products={[...products].slice(10, 20)} 
                   accentColor="from-cyan-500 to-blue-500" 
                 />
