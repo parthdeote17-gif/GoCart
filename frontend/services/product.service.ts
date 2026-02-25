@@ -11,13 +11,15 @@ export interface Product {
   description?: string;
 }
 
-// ✅ Updated: Added 'random' parameter to support shuffling
+// ✅ Updated: Added 'minPrice' and 'maxPrice' for price filtering
 export async function getProducts(
   category: string = "All", 
   page: number = 1, 
   limit: number = 20, 
   search: string = "",
-  random: boolean = false // 🆕 New Parameter
+  random: boolean = false, // 🆕 New Parameter
+  minPrice?: string | null, // ✅ Price Filter parameter
+  maxPrice?: string | null  // ✅ Price Filter parameter
 ) {
   try {
     const params = new URLSearchParams();
@@ -34,6 +36,14 @@ export async function getProducts(
     // ✅ Random Logic: Agar random true hai to backend ko batao
     if (random) {
       params.append("random", "true");
+    }
+
+    // ✅ Price Logic: Agar price limits hain to backend ko bhejo
+    if (minPrice) {
+      params.append("minPrice", minPrice);
+    }
+    if (maxPrice) {
+      params.append("maxPrice", maxPrice);
     }
     
     params.append("page", page.toString());
