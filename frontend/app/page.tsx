@@ -6,14 +6,14 @@ export const dynamic = "force-dynamic";
 import { useEffect, useState, Suspense } from "react"; 
 import { getProducts, getCategories } from "@/services/product.service";
 import Link from "next/link";
-import { ArrowRight, Heart, ShoppingBag, Zap, ChevronLeft, ChevronRight, SearchX, FilterX } from "lucide-react"; 
+import { ArrowRight, Star, Heart, ShoppingBag, Zap, ChevronLeft, ChevronRight, SearchX, FilterX } from "lucide-react"; 
 import { useRouter, useSearchParams } from "next/navigation"; 
 import ProductCard from "@/components/ProductCard"; 
 import { useQuery } from "@tanstack/react-query"; 
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
-// ✅ SLIDER IMAGES KEPT AS ORIGINAL
+// SLIDER IMAGES
 const sliderImages = [
   "/banner1.png", 
   "/banner2.png",
@@ -31,21 +31,19 @@ function HomeContent() {
   const selectedCategory = searchParams.get("category") || "All";
   const page = Number(searchParams.get("page")) || 1;
 
-  // ✅ NEW: URL se min/max price nikalna
+  // URL se min/max price nikalna
   const urlMinPrice = searchParams.get("min") || "";
   const urlMaxPrice = searchParams.get("max") || "";
 
-  // ✅ NEW: Price Filter Inputs
+  // Price Filter Inputs
   const [minPriceInput, setMinPriceInput] = useState(urlMinPrice);
   const [maxPriceInput, setMaxPriceInput] = useState(urlMaxPrice);
 
   const [categories, setCategories] = useState<any[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // ✅ UPDATED: Agar search ya price filter applied hai toh random feed mat dikhao
   const isRandomFeed = !searchQuery && !urlMinPrice && !urlMaxPrice; 
 
-  // ✅ UPDATED: Pass minPrice and maxPrice
   const { data, isLoading } = useQuery({
     queryKey: ['products', selectedCategory, page, searchQuery, isRandomFeed, urlMinPrice, urlMaxPrice], 
     queryFn: () => getProducts(selectedCategory, page, 30, searchQuery, isRandomFeed, urlMinPrice, urlMaxPrice), 
@@ -71,7 +69,6 @@ function HomeContent() {
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % sliderImages.length);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + sliderImages.length) % sliderImages.length);
 
-  // ✅ NEW: Helper function to safely update URL queries
   const updateFilters = (cat: string, newPage: number, min?: string, max?: string) => {
     const params = new URLSearchParams();
     if (cat !== "All") params.append("category", cat);
@@ -87,19 +84,13 @@ function HomeContent() {
     router.push(`/?${params.toString()}`);
   };
 
-  const handleCategoryChange = (cat: string) => {
-    updateFilters(cat, 1);
-  };
-
+  const handleCategoryChange = (cat: string) => updateFilters(cat, 1);
   const handlePageChange = (newPage: number) => {
     updateFilters(selectedCategory, newPage);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // ✅ NEW: Apply & Clear Price filter
-  const applyPriceFilter = () => {
-    updateFilters(selectedCategory, 1, minPriceInput, maxPriceInput);
-  };
+  const applyPriceFilter = () => updateFilters(selectedCategory, 1, minPriceInput, maxPriceInput);
   
   const clearPriceFilter = () => {
     setMinPriceInput("");
@@ -121,13 +112,10 @@ function HomeContent() {
         {!searchQuery && (
           <div className="max-w-[1500px] mx-auto px-4 w-full pt-28">
             
-            {/* ✅ IMAGE SLIDER */}
+            {/* IMAGE SLIDER */}
             <div className="relative w-full h-[300px] md:h-[500px] overflow-hidden mb-12 mx-auto rounded-3xl shadow-xl group bg-slate-900">
                {sliderImages.map((img, index) => (
-                  <div 
-                    key={index}
-                    className={`absolute inset-0 transition-all duration-1000 ease-in-out ${index === currentSlide ? "opacity-100 scale-100" : "opacity-0 scale-105"}`}
-                  >
+                  <div key={index} className={`absolute inset-0 transition-all duration-1000 ease-in-out ${index === currentSlide ? "opacity-100 scale-100" : "opacity-0 scale-105"}`}>
                       <img src={img} alt={`Slide ${index + 1}`} className="w-full h-full object-cover" />
                   </div>
                ))}
@@ -141,33 +129,20 @@ function HomeContent() {
 
                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
                   {sliderImages.map((_, index) => (
-                      <button 
-                        key={index}
-                        onClick={() => setCurrentSlide(index)}
-                        className={`transition-all duration-300 rounded-full ${index === currentSlide ? "bg-white w-8 h-2 shadow-[0_0_8px_rgba(255,255,255,0.8)]" : "bg-white/50 hover:bg-white/80 w-2 h-2"}`}
-                      />
+                      <button key={index} onClick={() => setCurrentSlide(index)} className={`transition-all duration-300 rounded-full ${index === currentSlide ? "bg-white w-8 h-2 shadow-[0_0_8px_rgba(255,255,255,0.8)]" : "bg-white/50 hover:bg-white/80 w-2 h-2"}`} />
                   ))}
                </div>
             </div>
 
-            {/* ✅ CATEGORY & PRICE FILTER UI (Updated Layout) */}
-            <div className="w-full mb-14 relative px-2 max-w-[1300px] mx-auto flex flex-col xl:flex-row gap-4 items-center">
-              
-              {/* Category Slider */}
-              <div className="w-full xl:w-2/3 bg-white rounded-full shadow-md border border-slate-100 p-3 overflow-hidden relative">
+            {/* ✅ CATEGORY SLIDER (Restored to Original Full Width Style) */}
+            <div className="w-full mb-14 relative px-2">
+              <div className="max-w-[1300px] mx-auto bg-white rounded-full shadow-md border border-slate-100 p-3 overflow-hidden relative">
                 <div className="category-scroll-container">
-                  <button 
-                    onClick={() => handleCategoryChange("All")} 
-                    className={`category-btn ${selectedCategory === "All" ? "active" : ""}`}
-                  >
+                  <button onClick={() => handleCategoryChange("All")} className={`category-btn ${selectedCategory === "All" ? "active" : ""}`}>
                     All Products
                   </button>
                   {categories.map((cat: any) => (
-                    <button 
-                      key={cat.category_name} 
-                      onClick={() => handleCategoryChange(cat.category_name)} 
-                      className={`category-btn ${selectedCategory === cat.category_name ? "active" : ""}`}
-                    >
+                    <button key={cat.category_name} onClick={() => handleCategoryChange(cat.category_name)} className={`category-btn ${selectedCategory === cat.category_name ? "active" : ""}`}>
                       {cat.category_name}
                     </button>
                   ))}
@@ -175,39 +150,9 @@ function HomeContent() {
                 <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-white to-transparent pointer-events-none rounded-r-full"></div>
                 <div className="absolute left-0 top-0 h-full w-12 bg-gradient-to-r from-white to-transparent pointer-events-none rounded-l-full"></div>
               </div>
-
-              {/* Price Filter Box */}
-              <div className="w-full xl:w-1/3 bg-white rounded-full shadow-md border border-slate-100 p-2 flex items-center justify-between gap-2 pl-4">
-                <span className="text-sm font-bold text-slate-500 hidden sm:block">Price:</span>
-                <input 
-                  type="number" 
-                  placeholder="Min ₹" 
-                  value={minPriceInput}
-                  onChange={(e) => setMinPriceInput(e.target.value)}
-                  className="w-full max-w-[90px] p-2 text-sm font-medium bg-slate-50 rounded-full border border-slate-200 outline-none focus:border-indigo-500 focus:bg-white transition-all text-center"
-                />
-                <span className="text-slate-300">-</span>
-                <input 
-                  type="number" 
-                  placeholder="Max ₹" 
-                  value={maxPriceInput}
-                  onChange={(e) => setMaxPriceInput(e.target.value)}
-                  className="w-full max-w-[90px] p-2 text-sm font-medium bg-slate-50 rounded-full border border-slate-200 outline-none focus:border-indigo-500 focus:bg-white transition-all text-center"
-                />
-                <div className="flex gap-1">
-                  <button onClick={applyPriceFilter} className="px-4 py-2 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-indigo-600 transition-colors shadow-sm">
-                    Go
-                  </button>
-                  {(urlMinPrice || urlMaxPrice) && (
-                    <button onClick={clearPriceFilter} title="Clear Filter" className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors">
-                      <FilterX size={18} />
-                    </button>
-                  )}
-                </div>
-              </div>
             </div>
 
-            {/* ✅ PROMOTIONAL BLOCKS */}
+            {/* PROMOTIONAL BLOCKS */}
             {selectedCategory === "All" && (
               <div className="flex flex-wrap justify-center items-stretch gap-6 mb-16">
                 
@@ -270,28 +215,21 @@ function HomeContent() {
               </div>
             )}
 
-            {/* ✅ RANDOMIZED HORIZONTAL SCROLL ROWS */}
+            {/* RANDOMIZED HORIZONTAL SCROLL ROWS */}
             {selectedCategory === "All" && products.length > 0 && (
               <div className="mb-16">
-                <HorizontalScrollRow 
-                  title="Top Deals This Week" 
-                  products={[...products].reverse().slice(0, 10)} 
-                  accentColor="from-violet-500 to-fuchsia-500" 
-                />
-                <HorizontalScrollRow 
-                  title="Home Essentials" 
-                  products={[...products].slice(10, 20)} 
-                  accentColor="from-cyan-500 to-blue-500" 
-                />
+                <HorizontalScrollRow title="Top Deals This Week" products={[...products].reverse().slice(0, 10)} accentColor="from-violet-500 to-fuchsia-500" />
+                <HorizontalScrollRow title="Home Essentials" products={[...products].slice(10, 20)} accentColor="from-cyan-500 to-blue-500" />
               </div>
             )}
-
           </div>
         )}
 
         {/* --- MAIN CONTENT SECTION --- */}
         <section className="main-section" style={{ marginTop: searchQuery ? '9rem' : '0' }}>
-          <div className="section-header">
+          
+          {/* ✅ UPDATED HEADER: Filter is moved here! */}
+          <div className="section-header" style={{ alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
               <h2 className="section-title">
                 {searchQuery ? (
@@ -303,19 +241,51 @@ function HomeContent() {
                 )}
               </h2>
             </div>
-            <span className="page-badge">
-              Page {page} of {totalPages}
-            </span>
+            
+            {/* RIGHT SIDE CONTAINER (Filter + Page Badge) */}
+            <div className="flex flex-wrap items-center gap-3 justify-end ml-auto">
+              
+              {/* PRICE FILTER UI */}
+              <div className="bg-white/80 backdrop-blur-md rounded-full shadow-sm border border-slate-200 p-1.5 flex items-center gap-2">
+                <span className="text-sm font-bold text-slate-500 pl-3 hidden sm:block">Price:</span>
+                <input 
+                  type="number" 
+                  placeholder="Min ₹" 
+                  value={minPriceInput}
+                  onChange={(e) => setMinPriceInput(e.target.value)}
+                  className="w-[80px] p-2 text-sm font-medium bg-slate-50 rounded-full border border-slate-200 outline-none focus:border-indigo-500 focus:bg-white transition-all text-center"
+                />
+                <span className="text-slate-300">-</span>
+                <input 
+                  type="number" 
+                  placeholder="Max ₹" 
+                  value={maxPriceInput}
+                  onChange={(e) => setMaxPriceInput(e.target.value)}
+                  className="w-[80px] p-2 text-sm font-medium bg-slate-50 rounded-full border border-slate-200 outline-none focus:border-indigo-500 focus:bg-white transition-all text-center"
+                />
+                <div className="flex gap-1 pr-1">
+                  <button onClick={applyPriceFilter} className="px-4 py-2 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-indigo-600 transition-colors shadow-sm">
+                    Go
+                  </button>
+                  {(urlMinPrice || urlMaxPrice) && (
+                    <button onClick={clearPriceFilter} title="Clear Filter" className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors">
+                      <FilterX size={18} />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* PAGE BADGE */}
+              <span className="page-badge">
+                Page {page} of {totalPages}
+              </span>
+            </div>
           </div>
 
           {isLoading ? (
             <div className="product-grid">
               {[...Array(12)].map((_, i) => (
-                <div key={i} className="skeleton-card">
-                  <div className="skeleton-img"></div>
-                  <div className="skeleton-text w-50"></div>
-                  <div className="skeleton-text w-25"></div>
-                </div>
+                <div key={i} className="skeleton-card"><div className="skeleton-img"></div><div className="skeleton-text w-50"></div><div className="skeleton-text w-25"></div></div>
               ))}
             </div>
           ) : products.length === 0 ? (
@@ -323,18 +293,10 @@ function HomeContent() {
               <div className="flex justify-center text-slate-300 mb-6"><SearchX size={64}/></div>
               <h2 className="empty-title">No products found</h2>
               <p className="empty-subtitle">Try adjusting your search or filter to find what you're looking for.</p>
-              <button 
-                onClick={() => {
-                  clearPriceFilter();
-                  router.push(`/`);
-                }} 
-                className="clear-btn"
-              >
-                Clear Search & Filters
-              </button>
+              <button onClick={() => { clearPriceFilter(); router.push(`/`); }} className="clear-btn">Clear Search & Filters</button>
             </div>
           ) : (
-            <>
+             <>
               <div className="product-grid">
                 {products.map((product: any) => (
                   <div key={product.id} className="transition-transform duration-300 hover:-translate-y-2">
@@ -342,29 +304,10 @@ function HomeContent() {
                   </div>
                 ))}
               </div>
-
               <div className="pagination-container">
-                <button 
-                  disabled={page === 1}
-                  onClick={() => handlePageChange(Math.max(1, page - 1))}
-                  className={`page-btn ${page === 1 ? "disabled" : "hover:border-indigo-300 hover:text-indigo-600"}`}
-                >
-                  <ArrowRight size={16} style={{ transform: 'rotate(180deg)' }} />
-                  Prev
-                </button>
-                
-                <div className="page-number">
-                  {page} <span style={{ color: '#cbd5e1', margin: '0 0.25rem' }}>/</span> {totalPages}
-                </div>
-
-                <button 
-                  disabled={page >= totalPages}
-                  onClick={() => handlePageChange(page + 1)}
-                  className={`page-btn next ${page >= totalPages ? "disabled" : "hover:shadow-lg hover:-translate-y-1 transition-all"}`}
-                >
-                  Next
-                  <ArrowRight size={16} />
-                </button>
+                <button disabled={page === 1} onClick={() => handlePageChange(Math.max(1, page - 1))} className={`page-btn ${page === 1 ? "disabled" : "hover:border-indigo-300 hover:text-indigo-600"}`}><ArrowRight size={16} style={{ transform: 'rotate(180deg)' }} />Prev</button>
+                <div className="page-number">{page} <span style={{ color: '#cbd5e1', margin: '0 0.25rem' }}>/</span> {totalPages}</div>
+                <button disabled={page >= totalPages} onClick={() => handlePageChange(page + 1)} className={`page-btn next ${page >= totalPages ? "disabled" : "hover:shadow-lg hover:-translate-y-1 transition-all"}`}>Next<ArrowRight size={16} /></button>
               </div>
             </>
           )}
@@ -403,20 +346,22 @@ function HomeContent() {
         .blob-2 { bottom: 10%; right: -10%; width: 50vw; height: 50vw; background: #67e8f9; animation-delay: 2s; }
         .blob-3 { top: 40%; left: 20%; width: 40vw; height: 40vw; background: #fbcfe8; }
         
-        /* ✅ UPDATED CATEGORY SLIDER (Bigger Size like original) */
+        /* CATEGORY SLIDER */
         .category-scroll-container { display: flex; gap: 0.75rem; overflow-x: auto; width: 100%; scrollbar-width: none; align-items: center; padding: 0.25rem; }
         .category-scroll-container::-webkit-scrollbar { display: none; }
-        
         .category-btn { flex: 0 0 auto; white-space: nowrap; padding: 0.8rem 1.75rem; border-radius: 9999px; font-weight: 600; font-size: 1.05rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: none; background: #f1f5f9; color: #64748b; }
         .category-btn:hover:not(.active) { background: #e2e8f0; color: #334155; transform: scale(1.02) translateY(-1px); }
         .category-btn.active { background: #0f172a; color: #ffffff; box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2); transform: scale(1.05); }
 
         /* Main Elements */
         .main-section { max-width: 1500px; margin: 0 auto; padding: 0 1rem 6rem; width: 100%; }
-        .section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2rem; padding: 0 0.5rem; }
+        
+        /* ✅ UPDATED SECTION HEADER CSS */
+        .section-header { display: flex; justify-content: space-between; margin-bottom: 2rem; padding: 0 0.5rem; }
+        
         .section-title { font-size: 1.875rem; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 0.75rem; }
         .hot-badge { font-size: 0.875rem; font-weight: 600; color: #ef4444; background: #fee2e2; padding: 0.25rem 0.75rem; border-radius: 9999px; border: 1px solid #fecaca; }
-        .page-badge { font-size: 0.875rem; font-weight: 600; color: #64748b; background: #ffffff; padding: 0.375rem 1rem; border-radius: 9999px; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .page-badge { font-size: 0.875rem; font-weight: 600; color: #64748b; background: #ffffff; padding: 0.5rem 1rem; border-radius: 9999px; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
         
         /* Grid */
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; }
@@ -464,16 +409,14 @@ function HomeContent() {
   );
 }
 
-// ✅ HORIZONTAL SCROLL COMPONENT
+// HORIZONTAL SCROLL COMPONENT (Unchanged)
 function HorizontalScrollRow({ title, products, accentColor }: { title: string, products: any[], accentColor: string }) {
   const rowProducts = Array.isArray(products) ? products.slice(0, 10) : [];
-
   if (rowProducts.length === 0) return null;
-
+  
   return (
     <div className="bg-white relative mb-8 p-6 border border-slate-200 rounded-3xl shadow-sm hover:shadow-md transition-shadow duration-300">
       <div className={`absolute left-0 top-[30px] w-[6px] h-[35px] bg-gradient-to-b ${accentColor} rounded-r-md`}></div>
-      
       <h2 className="text-[20px] font-extrabold text-slate-800 mb-6 pl-4 flex items-center justify-between">
         {title}
         <Link href="/" className="text-[13px] font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 group bg-indigo-50 px-3 py-1.5 rounded-full">
@@ -483,55 +426,23 @@ function HorizontalScrollRow({ title, products, accentColor }: { title: string, 
       
       <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x">
         {rowProducts.map((p, idx) => {
-          
-          /* ✅ ROBUST DATASET IMAGE EXTRACTION */
-          let imageSource = "";
-
-          if (p?.images && Array.isArray(p.images) && p.images.length > 0) {
-            imageSource = p.images[0];
-          } else if (p?.image) {
-            imageSource = p.image;
-          } else if (p?.thumbnail) {
-            imageSource = p.thumbnail;
-          } else if (p?.img_url) {
-            imageSource = p.img_url;
-          } else if (p?.imgUrl) {
-            imageSource = p.imgUrl;
-          }
-
-          /* ✅ Relative path fix */
-          if (imageSource && !imageSource.startsWith("http")) {
-            imageSource = `${BASE_URL}${imageSource}`;
-          }
+          let imageSource = p?.img_url || p?.imgUrl || `${BASE_URL}${p?.images?.[0]}`;
+          if (imageSource && !imageSource.startsWith("http")) imageSource = `${BASE_URL}${imageSource}`;
           
           return (
             <Link key={idx} href={`/product/${p.id}`} className="snap-start shrink-0 w-[170px] bg-white rounded-2xl p-3 border border-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-slate-200 flex flex-col justify-between group">
               <div className="bg-slate-50 rounded-xl p-2 mb-3 h-[130px] flex items-center justify-center overflow-hidden">
                  {imageSource && (
-                   <img 
-                     src={imageSource} 
-                     referrerPolicy="no-referrer" /* ✅ Bypass Hotlinking Blocks */
-                     className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 mix-blend-multiply" 
-                     alt={p.title || "Product"} 
-                     onError={(e) => {
-                       // ✅ Sirf image hide hogi (No Placeholders), box saaf rahega
-                       e.currentTarget.style.display = "none";
-                     }}
-                   />
+                   <img src={imageSource} referrerPolicy="no-referrer" className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 mix-blend-multiply" alt={p.title} onError={(e) => { e.currentTarget.style.display = "none"; }}/>
                  )}
               </div>
-              <p className="text-[13px] font-bold text-slate-700 line-clamp-2 leading-tight min-h-[36px] text-center px-1">
-                {p.title || "Product Name"}
-              </p>
+              <p className="text-[13px] font-bold text-slate-700 line-clamp-2 leading-tight min-h-[36px] text-center px-1">{p.title}</p>
             </Link>
           )
         })}
         
-        {/* "See All" Card */}
         <Link href="/" className={`snap-start shrink-0 w-[170px] bg-gradient-to-br ${accentColor} text-white rounded-2xl p-4 flex flex-col items-center justify-center shadow-md hover:-translate-y-2 hover:shadow-xl transition-all group`}>
-           <div className="bg-white/20 p-4 rounded-full mb-3 group-hover:scale-110 transition-transform">
-             <ArrowRight size={28} />
-           </div>
+           <div className="bg-white/20 p-4 rounded-full mb-3 group-hover:scale-110 transition-transform"><ArrowRight size={28} /></div>
            <span className="font-bold text-[14px] uppercase tracking-wider text-center">See All<br/>Offers</span>
         </Link>
       </div>
@@ -541,11 +452,7 @@ function HorizontalScrollRow({ title, products, accentColor }: { title: string, 
 
 export default function HomePage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-[#f8fafc]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-indigo-600"></div>
-      </div>
-    }>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-[#f8fafc]"><div className="animate-spin rounded-full h-12 w-12 border-b-4 border-indigo-600"></div></div>}>
       <HomeContent />
     </Suspense>
   );
