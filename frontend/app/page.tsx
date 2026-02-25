@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 import { useEffect, useState, Suspense } from "react"; 
 import { getProducts, getCategories } from "@/services/product.service";
 import Link from "next/link";
-import { ArrowRight, Heart, ShoppingBag, Zap, ChevronLeft, ChevronRight, SearchX } from "lucide-react"; 
+import { ArrowRight, Heart, ShoppingBag, Zap, ChevronLeft, ChevronRight, SearchX, FilterX } from "lucide-react"; 
 import { useRouter, useSearchParams } from "next/navigation"; 
 import ProductCard from "@/components/ProductCard"; 
 import { useQuery } from "@tanstack/react-query"; 
@@ -31,14 +31,24 @@ function HomeContent() {
   const selectedCategory = searchParams.get("category") || "All";
   const page = Number(searchParams.get("page")) || 1;
 
+  // ✅ NEW: URL se min/max price nikalna
+  const urlMinPrice = searchParams.get("min") || "";
+  const urlMaxPrice = searchParams.get("max") || "";
+
+  // ✅ NEW: Price Filter Inputs
+  const [minPriceInput, setMinPriceInput] = useState(urlMinPrice);
+  const [maxPriceInput, setMaxPriceInput] = useState(urlMaxPrice);
+
   const [categories, setCategories] = useState<any[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const isRandomFeed = !searchQuery; 
+  // ✅ UPDATED: Agar search ya price filter applied hai toh random feed mat dikhao
+  const isRandomFeed = !searchQuery && !urlMinPrice && !urlMaxPrice; 
 
+  // ✅ UPDATED: Pass minPrice and maxPrice
   const { data, isLoading } = useQuery({
-    queryKey: ['products', selectedCategory, page, searchQuery, isRandomFeed], 
-    queryFn: () => getProducts(selectedCategory, page, 30, searchQuery, isRandomFeed), 
+    queryKey: ['products', selectedCategory, page, searchQuery, isRandomFeed, urlMinPrice, urlMaxPrice], 
+    queryFn: () => getProducts(selectedCategory, page, 30, searchQuery, isRandomFeed, urlMinPrice, urlMaxPrice), 
     staleTime: 5 * 60 * 1000, 
   });
 
@@ -61,21 +71,40 @@ function HomeContent() {
   const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % sliderImages.length);
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + sliderImages.length) % sliderImages.length);
 
-  const handleCategoryChange = (cat: string) => {
+  // ✅ NEW: Helper function to safely update URL queries
+  const updateFilters = (cat: string, newPage: number, min?: string, max?: string) => {
     const params = new URLSearchParams();
     if (cat !== "All") params.append("category", cat);
-    params.append("page", "1"); 
+    if (searchQuery) params.append("search", searchQuery);
+    
+    const finalMin = min !== undefined ? min : urlMinPrice;
+    const finalMax = max !== undefined ? max : urlMaxPrice;
+    
+    if (finalMin) params.append("min", finalMin);
+    if (finalMax) params.append("max", finalMax);
+    
+    params.append("page", newPage.toString()); 
     router.push(`/?${params.toString()}`);
   };
 
+  const handleCategoryChange = (cat: string) => {
+    updateFilters(cat, 1);
+  };
+
   const handlePageChange = (newPage: number) => {
-    const params = new URLSearchParams();
-    if (selectedCategory !== "All") params.append("category", selectedCategory);
-    if (searchQuery) params.append("search", searchQuery);
-    params.append("page", newPage.toString());
-    
-    router.push(`/?${params.toString()}`);
+    updateFilters(selectedCategory, newPage);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // ✅ NEW: Apply & Clear Price filter
+  const applyPriceFilter = () => {
+    updateFilters(selectedCategory, 1, minPriceInput, maxPriceInput);
+  };
+  
+  const clearPriceFilter = () => {
+    setMinPriceInput("");
+    setMaxPriceInput("");
+    updateFilters(selectedCategory, 1, "", "");
   };
 
   return (
@@ -121,9 +150,11 @@ function HomeContent() {
                </div>
             </div>
 
-            {/* ✅ CATEGORY SLIDER (Bigger Capsule Style) */}
-            <div className="w-full mb-14 relative px-2">
-              <div className="max-w-[1300px] mx-auto bg-white rounded-full shadow-md border border-slate-100 p-3 overflow-hidden relative">
+            {/* ✅ CATEGORY & PRICE FILTER UI (Updated Layout) */}
+            <div className="w-full mb-14 relative px-2 max-w-[1300px] mx-auto flex flex-col xl:flex-row gap-4 items-center">
+              
+              {/* Category Slider */}
+              <div className="w-full xl:w-2/3 bg-white rounded-full shadow-md border border-slate-100 p-3 overflow-hidden relative">
                 <div className="category-scroll-container">
                   <button 
                     onClick={() => handleCategoryChange("All")} 
@@ -143,6 +174,36 @@ function HomeContent() {
                 </div>
                 <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-white to-transparent pointer-events-none rounded-r-full"></div>
                 <div className="absolute left-0 top-0 h-full w-12 bg-gradient-to-r from-white to-transparent pointer-events-none rounded-l-full"></div>
+              </div>
+
+              {/* Price Filter Box */}
+              <div className="w-full xl:w-1/3 bg-white rounded-full shadow-md border border-slate-100 p-2 flex items-center justify-between gap-2 pl-4">
+                <span className="text-sm font-bold text-slate-500 hidden sm:block">Price:</span>
+                <input 
+                  type="number" 
+                  placeholder="Min ₹" 
+                  value={minPriceInput}
+                  onChange={(e) => setMinPriceInput(e.target.value)}
+                  className="w-full max-w-[90px] p-2 text-sm font-medium bg-slate-50 rounded-full border border-slate-200 outline-none focus:border-indigo-500 focus:bg-white transition-all text-center"
+                />
+                <span className="text-slate-300">-</span>
+                <input 
+                  type="number" 
+                  placeholder="Max ₹" 
+                  value={maxPriceInput}
+                  onChange={(e) => setMaxPriceInput(e.target.value)}
+                  className="w-full max-w-[90px] p-2 text-sm font-medium bg-slate-50 rounded-full border border-slate-200 outline-none focus:border-indigo-500 focus:bg-white transition-all text-center"
+                />
+                <div className="flex gap-1">
+                  <button onClick={applyPriceFilter} className="px-4 py-2 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-indigo-600 transition-colors shadow-sm">
+                    Go
+                  </button>
+                  {(urlMinPrice || urlMaxPrice) && (
+                    <button onClick={clearPriceFilter} title="Clear Filter" className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors">
+                      <FilterX size={18} />
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -235,6 +296,8 @@ function HomeContent() {
               <h2 className="section-title">
                 {searchQuery ? (
                    <>Results for <span className="text-indigo-600">"{searchQuery}"</span></>
+                ) : urlMinPrice || urlMaxPrice ? (
+                   <>Filtered Products <span className="hot-badge animate-pulse">Deals</span></>
                 ) : (
                    <>{selectedCategory === "All" ? "Trending Now" : selectedCategory} <span className="hot-badge animate-pulse">Hot Deals</span></>
                 )}
@@ -260,7 +323,13 @@ function HomeContent() {
               <div className="flex justify-center text-slate-300 mb-6"><SearchX size={64}/></div>
               <h2 className="empty-title">No products found</h2>
               <p className="empty-subtitle">Try adjusting your search or filter to find what you're looking for.</p>
-              <button onClick={() => router.push(`/`)} className="clear-btn">
+              <button 
+                onClick={() => {
+                  clearPriceFilter();
+                  router.push(`/`);
+                }} 
+                className="clear-btn"
+              >
                 Clear Search & Filters
               </button>
             </div>
