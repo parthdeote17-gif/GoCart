@@ -58,10 +58,17 @@ export default function ProductCard({
     }
   };
 
-  const handleAddToCart = (e: React.MouseEvent) => {
+  // ✅ Sirf yahan update kiya gaya hai (Login check ke liye try-catch)
+  const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart(product.id || product.product_id);
+    try {
+      await addToCart(product.id || product.product_id);
+      alert("Item added to cart!"); // Login hai toh success message
+    } catch (err) {
+      console.error(err);
+      alert("Please login to add items to your cart"); // Login nahi hai toh alert
+    }
   };
 
   return (
