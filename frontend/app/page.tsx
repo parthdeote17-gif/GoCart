@@ -33,14 +33,9 @@ function HomeContent() {
 
   const [categories, setCategories] = useState<any[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
-  
-  // ✅ NEW: SEPARATE STATES FOR HORIZONTAL ROWS SO THEY DON'T DUPLICATE MAIN GRID
-  const [topDeals, setTopDeals] = useState<any[]>([]);
-  const [homeEssentials, setHomeEssentials] = useState<any[]>([]);
 
   const isRandomFeed = !searchQuery; 
 
-  // Main Grid Data
   const { data, isLoading } = useQuery({
     queryKey: ['products', selectedCategory, page, searchQuery, isRandomFeed], 
     queryFn: () => getProducts(selectedCategory, page, 30, searchQuery, isRandomFeed), 
@@ -50,18 +45,9 @@ function HomeContent() {
   const products = data?.products || [];
   const totalPages = data?.pagination?.totalPages || 1;
 
-  // ✅ Fetch categories and distinct products for horizontal rows on mount
   useEffect(() => {
     getCategories().then((data) => {
       setCategories(Array.isArray(data) ? data : []);
-    });
-
-    // Fetching page 2 & 3 data specifically for horizontal rows so they are different from page 1 grid
-    getProducts("All", 2, 10, "", true).then((res) => {
-      if (res?.products) setTopDeals(res.products);
-    });
-    getProducts("All", 3, 10, "", true).then((res) => {
-      if (res?.products) setHomeEssentials(res.products);
     });
   }, []);
 
@@ -107,7 +93,7 @@ function HomeContent() {
           <div className="max-w-[1500px] mx-auto px-4 w-full pt-28">
             
             {/* ✅ IMAGE SLIDER */}
-            <div className="relative w-full h-[300px] md:h-[500px] overflow-hidden mb-10 mx-auto rounded-3xl shadow-xl group bg-slate-900">
+            <div className="relative w-full h-[300px] md:h-[500px] overflow-hidden mb-12 mx-auto rounded-3xl shadow-xl group bg-slate-900">
                {sliderImages.map((img, index) => (
                   <div 
                     key={index}
@@ -135,9 +121,9 @@ function HomeContent() {
                </div>
             </div>
 
-            {/* ✅ CATEGORY SLIDER (Capsule Style) */}
-            <div className="w-full mb-12 relative px-2">
-              <div className="max-w-6xl mx-auto bg-white rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-slate-100 p-2 overflow-hidden relative">
+            {/* ✅ CATEGORY SLIDER (Bigger Capsule Style) */}
+            <div className="w-full mb-14 relative px-2">
+              <div className="max-w-[1300px] mx-auto bg-white rounded-full shadow-md border border-slate-100 p-3 overflow-hidden relative">
                 <div className="category-scroll-container">
                   <button 
                     onClick={() => handleCategoryChange("All")} 
@@ -155,8 +141,8 @@ function HomeContent() {
                     </button>
                   ))}
                 </div>
-                <div className="absolute right-0 top-0 h-full w-16 bg-gradient-to-l from-white to-transparent pointer-events-none rounded-r-full"></div>
-                <div className="absolute left-0 top-0 h-full w-8 bg-gradient-to-r from-white to-transparent pointer-events-none rounded-l-full"></div>
+                <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-white to-transparent pointer-events-none rounded-r-full"></div>
+                <div className="absolute left-0 top-0 h-full w-12 bg-gradient-to-r from-white to-transparent pointer-events-none rounded-l-full"></div>
               </div>
             </div>
 
@@ -223,23 +209,19 @@ function HomeContent() {
               </div>
             )}
 
-            {/* ✅ HORIZONTAL SCROLL ROWS (Now using distinct state data!) */}
-            {selectedCategory === "All" && (
+            {/* ✅ RANDOMIZED HORIZONTAL SCROLL ROWS */}
+            {selectedCategory === "All" && products.length > 0 && (
               <div className="mb-16">
-                {topDeals.length > 0 && (
-                  <HorizontalScrollRow 
-                    title="Top Deals This Week" 
-                    products={topDeals} 
-                    accentColor="from-violet-500 to-fuchsia-500" 
-                  />
-                )}
-                {homeEssentials.length > 0 && (
-                  <HorizontalScrollRow 
-                    title="Home Essentials" 
-                    products={homeEssentials} 
-                    accentColor="from-cyan-500 to-blue-500" 
-                  />
-                )}
+                <HorizontalScrollRow 
+                  title="Top Deals This Week" 
+                  products={[...products].reverse().slice(0, 10)} 
+                  accentColor="from-violet-500 to-fuchsia-500" 
+                />
+                <HorizontalScrollRow 
+                  title="Home Essentials" 
+                  products={[...products].slice(10, 20)} 
+                  accentColor="from-cyan-500 to-blue-500" 
+                />
               </div>
             )}
 
@@ -352,11 +334,11 @@ function HomeContent() {
         .blob-2 { bottom: 10%; right: -10%; width: 50vw; height: 50vw; background: #67e8f9; animation-delay: 2s; }
         .blob-3 { top: 40%; left: 20%; width: 40vw; height: 40vw; background: #fbcfe8; }
         
-        /* Category Scroll Container */
-        .category-scroll-container { display: flex; gap: 0.5rem; overflow-x: auto; width: 100%; scrollbar-width: none; align-items: center; }
+        /* ✅ UPDATED CATEGORY SLIDER (Bigger Size like original) */
+        .category-scroll-container { display: flex; gap: 0.75rem; overflow-x: auto; width: 100%; scrollbar-width: none; align-items: center; padding: 0.25rem; }
         .category-scroll-container::-webkit-scrollbar { display: none; }
         
-        .category-btn { flex: 0 0 auto; white-space: nowrap; padding: 0.6rem 1.25rem; border-radius: 9999px; font-weight: 600; font-size: 0.9rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: none; background: #f1f5f9; color: #64748b; }
+        .category-btn { flex: 0 0 auto; white-space: nowrap; padding: 0.8rem 1.75rem; border-radius: 9999px; font-weight: 600; font-size: 1.05rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; border: none; background: #f1f5f9; color: #64748b; }
         .category-btn:hover:not(.active) { background: #e2e8f0; color: #334155; transform: scale(1.02) translateY(-1px); }
         .category-btn.active { background: #0f172a; color: #ffffff; box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2); transform: scale(1.05); }
 
