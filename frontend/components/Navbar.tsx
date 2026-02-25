@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react"; // ✅ useRef add kiya
 import { ShoppingBag, Search, ShoppingCart, User, LogOut, Heart, Menu } from "lucide-react"; 
 import { getCart } from "@/services/cart.service";
+import { fetchSearchSuggestions } from "@/services/product.service"; // ✅ Import kiya
 
 export default function Navbar() {
   // ---------------------------------------------------------
@@ -14,6 +15,11 @@ export default function Navbar() {
   const [user, setUser] = useState<any>(null);
   const [cartCount, setCartCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+
+  // ✅ NEW States for Suggestions
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const searchRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     // Check for window to avoid hydration mismatch
@@ -29,6 +35,34 @@ export default function Navbar() {
     }
   }, []);
 
+  // ✅ NEW: Fetch Suggestions jab type kare (Debounce ke sath)
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (searchTerm.trim().length >= 2) {
+        fetchSearchSuggestions(searchTerm).then(data => {
+          setSuggestions(data);
+          setShowSuggestions(true);
+        });
+      } else {
+        setSuggestions([]);
+        setShowSuggestions(false);
+      }
+    }, 300); // 300ms delay taaki har letter type karne pe API call na ho
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm]);
+
+  // ✅ NEW: Bahar click karne par dropdown band ho jaye
+  useEffect(() => {
+    function handleClickOutside(event: any) {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setShowSuggestions(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -38,11 +72,10 @@ export default function Navbar() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    setShowSuggestions(false); // ✅ Search pe click karne k baad dropdown band
     if (searchTerm.trim()) {
-      // ✅ CHANGE: '/home' ko '/' kar diya
       router.push(`/?search=${encodeURIComponent(searchTerm)}`);
     } else {
-      // ✅ CHANGE: '/home' ko '/' kar diya
       router.push(`/`);
     }
   };
@@ -71,9 +104,9 @@ export default function Navbar() {
           {/* Desktop Nav Links with Hover Underline */}
           <div className="hidden lg:flex items-center gap-8 text-sm font-bold text-slate-500">
             {[
-              { name: 'Home', path: '/' }, // ✅ CHANGE: '/home' -> '/'
+              { name: 'Home', path: '/' },
               { name: 'About', path: '/about' },
-              { name: 'Contact', path: '/about' } // Kept Contact pointing to /about
+              { name: 'Contact', path: '/about' } 
             ].map((link) => (
               <Link 
                 key={link.name}
@@ -87,19 +120,44 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* 2. SEARCH BAR (Modern Floating Input) */}
-        <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-md mx-8 transition-all duration-300">
+        {/* 2. SEARCH BAR (Modern Floating Input + Dropdown) */}
+        {/* ✅ form me ref add kiya */}
+        <form ref={searchRef} onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-md mx-8 transition-all duration-300 relative">
           <div className="relative w-full group">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none z-10">
               <Search size={18} className="text-slate-400 group-focus-within:text-indigo-500 transition-colors" />
             </div>
             <input 
               type="text"
               placeholder="Search products..."
-              className="w-full pl-11 pr-4 py-2.5 rounded-full bg-white/60 border border-indigo-100 focus:bg-white focus:border-indigo-300 focus:ring-4 focus:ring-indigo-500/10 outline-none text-sm font-medium transition-all shadow-sm hover:shadow-md placeholder:text-slate-400/80 text-slate-700"
+              className="w-full pl-11 pr-4 py-2.5 rounded-full bg-white/60 border border-indigo-100 focus:bg-white focus:border-indigo-300 focus:ring-4 focus:ring-indigo-500/10 outline-none text-sm font-medium transition-all shadow-sm hover:shadow-md placeholder:text-slate-400/80 text-slate-700 relative z-10"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              onFocus={() => { if(suggestions.length > 0) setShowSuggestions(true) }} // ✅ Wapas focus karne par show hoga
             />
+
+            {/* ✅ NEW: Suggestions Dropdown Box */}
+            {showSuggestions && suggestions.length > 0 && (
+              <div className="absolute top-full left-0 w-full mt-2 bg-white rounded-2xl shadow-xl shadow-indigo-100/50 border border-indigo-50 overflow-hidden z-50 animate-in fade-in slide-in-from-top-2">
+                {suggestions.map((item) => (
+                  <Link 
+                    key={item.id} 
+                    href={`/product/${item.id}`}
+                    onClick={() => {
+                        setShowSuggestions(false);
+                        setSearchTerm(""); // Optionally clear search term after selecting
+                    }}
+                    className="flex items-center gap-4 px-4 py-3 hover:bg-slate-50 border-b border-slate-50 last:border-0 transition-colors cursor-pointer"
+                  >
+                    <img src={item.img_url} alt={item.title} className="w-10 h-10 rounded-lg object-contain bg-slate-100" />
+                    <div>
+                      <h4 className="text-sm font-bold text-slate-800 line-clamp-1">{item.title}</h4>
+                      <p className="text-xs text-indigo-600 font-bold mt-0.5">₹{item.price}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
         </form>
 
