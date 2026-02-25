@@ -1,7 +1,7 @@
 import pool from "../config/db.js";
 
-// ✅ Updated: Added 'random' parameter
-export const getAllProducts = async (limit, offset, category, search, random = false) => {
+// ✅ Updated: Added minPrice aur maxPrice parameters
+export const getAllProducts = async (limit, offset, category, search, random = false, minPrice, maxPrice) => {
   let query = "SELECT * FROM products WHERE 1=1"; 
   let params = [];
   
@@ -15,6 +15,16 @@ export const getAllProducts = async (limit, offset, category, search, random = f
   if (search && search.trim() !== "") {
     params.push(`%${search}%`);
     query += ` AND (title ILIKE $${params.length} OR description ILIKE $${params.length} OR category_name ILIKE $${params.length})`;
+  }
+
+  // ✅ NEW: Price Filter Logic
+  if (minPrice !== undefined && minPrice !== null) {
+    params.push(minPrice);
+    query += ` AND price >= $${params.length}`;
+  }
+  if (maxPrice !== undefined && maxPrice !== null) {
+    params.push(maxPrice);
+    query += ` AND price <= $${params.length}`;
   }
 
   // 3. Sorting Logic (Random vs ID)
@@ -38,7 +48,8 @@ export const getAllProducts = async (limit, offset, category, search, random = f
   return rows;
 };
 
-export const countProducts = async (category, search) => {
+// ✅ Updated: countProducts mein bhi price filter lagaya
+export const countProducts = async (category, search, minPrice, maxPrice) => {
   let query = "SELECT COUNT(*) FROM products WHERE 1=1";
   let params = [];
 
@@ -50,6 +61,16 @@ export const countProducts = async (category, search) => {
   if (search && search.trim() !== "") {
     params.push(`%${search}%`);
     query += ` AND (title ILIKE $${params.length} OR description ILIKE $${params.length} OR category_name ILIKE $${params.length})`;
+  }
+
+  // ✅ NEW: Price Filter Logic for Pagination Count
+  if (minPrice !== undefined && minPrice !== null) {
+    params.push(minPrice);
+    query += ` AND price >= $${params.length}`;
+  }
+  if (maxPrice !== undefined && maxPrice !== null) {
+    params.push(maxPrice);
+    query += ` AND price <= $${params.length}`;
   }
 
   const { rows } = await pool.query(query, params);
@@ -78,5 +99,17 @@ export const getRelatedProductsModel = async (id, limit = 4) => {
     LIMIT $2
   `;
   const { rows } = await pool.query(query, [id, limit]);
+  return rows;
+};
+
+// ✅ NEW: Search Suggestions Logic (Gets 5 matching product names & images)
+export const getSearchSuggestionsModel = async (search) => {
+  const query = `
+    SELECT id, title, img_url, price 
+    FROM products 
+    WHERE title ILIKE $1 
+    LIMIT 5
+  `;
+  const { rows } = await pool.query(query, [`%${search}%`]);
   return rows;
 };
