@@ -3,10 +3,8 @@
 import Link from "next/link";
 import { addToCart } from "@/services/cart.service";
 import { toggleWishlist } from "@/services/wishlist.service";
-import { ShoppingCart, Heart, MoreVertical, Star, Trash2 } from "lucide-react";
+import { ShoppingCart, Heart, MoreVertical, Star, Trash2 } from "lucide-react"; // ✅ Icon wapas import kiya
 import { useState, useEffect, useRef } from "react";
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
 export default function ProductCard({ 
   product, 
@@ -17,29 +15,10 @@ export default function ProductCard({
   initialLiked?: boolean,
   onRemove?: (id: number) => void 
 }) {
-
   if (!product) return null;
 
-  /* ✅ ROBUST DATASET IMAGE EXTRACTION */
-  let imageSrc = "";
-
-  if (product?.images && Array.isArray(product.images) && product.images.length > 0) {
-    imageSrc = product.images[0];
-  } else if (product?.image) {
-    imageSrc = product.image;
-  } else if (product?.thumbnail) {
-    imageSrc = product.thumbnail;
-  } else if (product?.img_url) {
-    imageSrc = product.img_url;
-  } else if (product?.imgUrl) {
-    imageSrc = product.imgUrl;
-  }
-
-  /* ✅ Agar relative path hai to full URL banao */
-  if (imageSrc && !imageSrc.startsWith("http")) {
-    imageSrc = `${BASE_URL}${imageSrc}`;
-  }
-
+  const imageSrc = product.img_url || product.imgUrl || "https://via.placeholder.com/300";
+  
   const [liked, setLiked] = useState(initialLiked);
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -79,44 +58,30 @@ export default function ProductCard({
     }
   };
 
-  // ✅ ADDED TRY CATCH FOR ADD TO CART ERROR HANDLING
-  const handleAddToCart = async (e: React.MouseEvent) => {
+  const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    try {
-      await addToCart(product.id || product.product_id);
-      // alert("Item added to cart!"); // Uncomment if you want success message too
-    } catch (err) {
-      console.error(err);
-      alert("Please login to add items to your cart");
-    }
+    addToCart(product.id || product.product_id);
   };
 
   return (
+    // ✅ Card Size: 'aspect-[4/5]' (Compact)
     <div className="group relative aspect-[4/5] bg-white rounded-[1.5rem] overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
       
-      {/* IMAGE AREA */}
+      {/* 1. IMAGE AREA */}
+      {/* ✅ 'p-4' Padding di taaki image border se chipke na */}
+      {/* ✅ 'pb-24' Bottom space taaki image text area ke upar rahe */}
       <div className="absolute inset-0 p-4 pb-24 flex items-center justify-center bg-white z-0">
-        <Link
-          href={`/product/${product.id || product.product_id}`}
-          className="w-full h-full flex items-center justify-center relative"
-        >
-          {imageSrc && (
-            <img
-              src={imageSrc}
-              alt={product.title}
-              referrerPolicy="no-referrer"
-              className="relative z-10 h-full w-full object-contain hover:scale-105 transition-transform duration-500"
-              onError={(e) => {
-                // Agar image load fail ho jaye to hide kar do (no placeholder)
-                e.currentTarget.style.display = "none";
-              }}
-            />
-          )}
+        <Link href={`/product/${product.id || product.product_id}`} className="w-full h-full flex items-center justify-center relative">
+          <img
+            src={imageSrc}
+            alt={product.title}
+            className="relative z-10 h-full w-full object-contain hover:scale-105 transition-transform duration-500"
+          />
         </Link>
       </div>
 
-      {/* THREE DOTS MENU */}
+      {/* 2. THREE DOTS MENU */}
       <div className="absolute top-3 right-3 z-30" ref={menuRef}>
         <button
           onClick={toggleMenu}
@@ -155,8 +120,9 @@ export default function ProductCard({
         )}
       </div>
 
-      {/* INFO LAYER */}
+      {/* 3. INFO LAYER - TRANSPARENT BACKGROUND */}
       <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none">
+        {/* ✅ Gradient Background: Text saaf dikhega par white box image ko nahi dhakega */}
         <div className="bg-gradient-to-t from-white via-white/80 to-transparent pt-10 pb-4 px-4">
           
           <div className="flex items-center justify-between mb-1">
@@ -169,10 +135,7 @@ export default function ProductCard({
             </div>
           </div>
 
-          <Link
-            href={`/product/${product.id || product.product_id}`}
-            className="block pointer-events-auto"
-          >
+          <Link href={`/product/${product.id || product.product_id}`} className="block pointer-events-auto">
             <h3 className="font-bold text-slate-900 text-base leading-tight line-clamp-1 mb-1">
               {product.title}
             </h3>
@@ -181,15 +144,12 @@ export default function ProductCard({
           <div className="flex items-center justify-between mt-1 pointer-events-auto">
             <div className="flex flex-col">
                <div className="flex items-center gap-2">
-                 <span className="text-lg font-bold text-slate-900">
-                   ₹{product.price}
-                 </span>
-                 <span className="text-xs text-slate-400 line-through font-medium">
-                   ₹{Math.round(Number(product.price) * 1.3)}
-                 </span>
+                 <span className="text-lg font-bold text-slate-900">₹{product.price}</span>
+                 <span className="text-xs text-slate-400 line-through font-medium">₹{Math.round(Number(product.price) * 1.3)}</span>
                </div>
             </div>
 
+            {/* ✅ Cart Button Wapas aa gaya (Small & Cute) */}
             <button
               onClick={handleAddToCart}
               className="h-8 w-8 rounded-full bg-slate-900 text-white flex items-center justify-center shadow-md hover:bg-indigo-600 transition-colors"
@@ -199,6 +159,7 @@ export default function ProductCard({
               <ShoppingCart size={16} />
             </button>
           </div>
+          
         </div>
       </div>
     </div>
