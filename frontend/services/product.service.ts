@@ -76,3 +76,15 @@ export async function getRelatedProducts(id: string | number) {
     return []; // Empty array return karo taaki UI crash na ho
   }
 }
+
+// ✅ NEW FUNCTION: Fetch Search Suggestions (Autocomplete ke liye)
+export async function fetchSearchSuggestions(query: string) {
+  if (!query) return [];
+  try {
+    // Ye backend ke naye route (/products/suggestions) ko call karega
+    return await apiFetch(`/products/suggestions?q=${encodeURIComponent(query)}`);
+  } catch (error) {
+    console.error("Error fetching search suggestions:", error);
+    return [];
+  }
+}
