@@ -395,7 +395,7 @@ function HomeContent() {
   );
 }
 
-// ✅ HORIZONTAL SCROLL COMPONENT (UPDATED WITH NO-PLACEHOLDER LOGIC)
+// ✅ HORIZONTAL SCROLL COMPONENT
 function HorizontalScrollRow({ title, products, accentColor }: { title: string, products: any[], accentColor: string }) {
   const rowProducts = Array.isArray(products) ? products.slice(0, 10) : [];
 
