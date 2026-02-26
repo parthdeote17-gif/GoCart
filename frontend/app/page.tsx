@@ -249,7 +249,7 @@ function HomeContent() {
                           <div className="absolute bottom-2 left-2 backdrop-blur-md bg-black/30 border border-white/20 text-white text-[10px] uppercase tracking-wide font-bold px-3 py-1.5 rounded-full">Microwaves</div>
                         </div>
                         <div className="col-span-2 relative rounded-2xl overflow-hidden group/img">
-                          <img src="https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Fridges" />
+                          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiP1QX0egv6r5jecOBz4Yt6TLM1CUAkCVSJw&s" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Fridges" />
                           <div className="absolute inset-0 bg-black/10 group-hover/img:bg-black/30 transition-colors duration-500"></div>
                           <div className="absolute bottom-2 left-2 backdrop-blur-md bg-black/30 border border-white/20 text-white text-[10px] uppercase tracking-wide font-bold px-3 py-1.5 rounded-full">Fridges</div>
                         </div>
@@ -327,7 +327,7 @@ function HomeContent() {
                           <div className="absolute bottom-2 left-2 backdrop-blur-md bg-black/30 border border-white/20 text-white text-[10px] uppercase tracking-wide font-bold px-3 py-1.5 rounded-full">Winter</div>
                         </div>
                         <div className="col-span-2 relative rounded-2xl overflow-hidden group/img">
-                          <img src="https://images.unsplash.com/photo-1523206489230-c012c64b2b48?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Extras" />
+                          <img src="https://www.networksolutions.com/blog/wp-content/uploads/2025/03/Products-to-sell-online-1.png" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Extras" />
                           <div className="absolute inset-0 bg-black/10 group-hover/img:bg-black/30 transition-colors duration-500"></div>
                           <div className="absolute bottom-2 left-2 backdrop-blur-md bg-black/30 border border-white/20 text-white text-[10px] uppercase tracking-wide font-bold px-3 py-1.5 rounded-full">Extras</div>
                         </div>
