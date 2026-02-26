@@ -205,7 +205,7 @@ function HomeContent() {
                       </div>
                       <div className="grid grid-cols-5 gap-2 h-[115px]">
                         <div className="col-span-2 relative rounded-2xl overflow-hidden group/img">
-                          <img src="https://images.unsplash.com/photo-1595514535415-8aeac6f66318?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Storage" />
+                          <img src="https://m.media-amazon.com/images/I/717gcN7j0nL._AC_UF894,1000_QL80_.jpg" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Storage" />
                           <div className="absolute inset-0 bg-black/10 group-hover/img:bg-black/30 transition-colors duration-500"></div>
                           <div className="absolute bottom-2 left-2 backdrop-blur-md bg-black/30 border border-white/20 text-white text-[10px] uppercase tracking-wide font-bold px-3 py-1.5 rounded-full">Storage</div>
                         </div>
@@ -232,7 +232,7 @@ function HomeContent() {
                     <div className="flex flex-col gap-2 flex-grow">
                       <div className="grid grid-cols-5 gap-2 h-[115px]">
                         <div className="col-span-2 relative rounded-2xl overflow-hidden group/img">
-                          <img src="https://images.unsplash.com/photo-1620288627223-53302f4e8c74?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="ACs" />
+                          <img src="https://enciser.com/wp-content/uploads/2025/05/Top-10-1.5-ton-split-ac.jpg" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="ACs" />
                           <div className="absolute inset-0 bg-black/10 group-hover/img:bg-black/30 transition-colors duration-500"></div>
                           <div className="absolute bottom-2 left-2 backdrop-blur-md bg-black/30 border border-white/20 text-white text-[10px] uppercase tracking-wide font-bold px-3 py-1.5 rounded-full">ACs</div>
                         </div>
@@ -244,7 +244,7 @@ function HomeContent() {
                       </div>
                       <div className="grid grid-cols-5 gap-2 h-[115px]">
                         <div className="col-span-3 relative rounded-2xl overflow-hidden group/img">
-                          <img src="https://images.unsplash.com/photo-1585659722983-38ca8da4e508?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Microwaves" />
+                          <img src="https://www.livemint.com/lm-img/img/2026/01/07/600x338/microwave_1767784659800_1767784666886.png" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Microwaves" />
                           <div className="absolute inset-0 bg-black/10 group-hover/img:bg-black/30 transition-colors duration-500"></div>
                           <div className="absolute bottom-2 left-2 backdrop-blur-md bg-black/30 border border-white/20 text-white text-[10px] uppercase tracking-wide font-bold px-3 py-1.5 rounded-full">Microwaves</div>
                         </div>
@@ -276,7 +276,7 @@ function HomeContent() {
                           <div className="absolute bottom-2 left-2 backdrop-blur-md bg-black/30 border border-white/20 text-white text-[10px] uppercase tracking-wide font-bold px-3 py-1.5 rounded-full">Phones</div>
                         </div>
                         <div className="col-span-2 relative rounded-2xl overflow-hidden group/img">
-                          <img src="https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Buds" />
+                          <img src="https://ambraneindia.com/cdn/shop/products/earbuds-with-noise-cancellation.png?v=1763459908&width=300" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Buds" />
                           <div className="absolute inset-0 bg-black/10 group-hover/img:bg-black/30 transition-colors duration-500"></div>
                           <div className="absolute bottom-2 left-2 backdrop-blur-md bg-black/30 border border-white/20 text-white text-[10px] uppercase tracking-wide font-bold px-3 py-1.5 rounded-full">Buds</div>
                         </div>
@@ -288,7 +288,7 @@ function HomeContent() {
                           <div className="absolute bottom-2 left-2 backdrop-blur-md bg-black/30 border border-white/20 text-white text-[10px] uppercase tracking-wide font-bold px-3 py-1.5 rounded-full">Speakers</div>
                         </div>
                         <div className="col-span-3 relative rounded-2xl overflow-hidden group/img">
-                          <img src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Headsets" />
+                          <img src="https://cdn.shopify.com/s/files/1/0057/8938/4802/files/LR_480.png?v=1733741345&width=400" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Headsets" />
                           <div className="absolute inset-0 bg-black/10 group-hover/img:bg-black/30 transition-colors duration-500"></div>
                           <div className="absolute bottom-2 left-2 backdrop-blur-md bg-black/30 border border-white/20 text-white text-[10px] uppercase tracking-wide font-bold px-3 py-1.5 rounded-full">Headsets</div>
                         </div>
@@ -322,7 +322,7 @@ function HomeContent() {
                       </div>
                       <div className="grid grid-cols-5 gap-2 h-[115px]">
                         <div className="col-span-3 relative rounded-2xl overflow-hidden group/img">
-                          <img src="https://images.unsplash.com/photo-1533313264027-ec1be93c78ce?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Winter" />
+                          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjBqsduwbeqzp4dH4IQQw4i-zhaDTfagAoyQ&s" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Winter" />
                           <div className="absolute inset-0 bg-black/10 group-hover/img:bg-black/30 transition-colors duration-500"></div>
                           <div className="absolute bottom-2 left-2 backdrop-blur-md bg-black/30 border border-white/20 text-white text-[10px] uppercase tracking-wide font-bold px-3 py-1.5 rounded-full">Winter</div>
                         </div>
