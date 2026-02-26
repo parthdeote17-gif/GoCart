@@ -150,7 +150,7 @@ function HomeContent() {
                </div>
             </div>
 
-            {/* ✅ CATEGORY SLIDER (Bigger Capsule Style - Filters Removed from here) */}
+            {/* ✅ CATEGORY SLIDER (Bigger Capsule Style) */}
             <div className="w-full mb-14 relative px-2">
               <div className="max-w-[1300px] mx-auto bg-white rounded-full shadow-md border border-slate-100 p-3 overflow-hidden relative">
                 <div className="category-scroll-container">
@@ -175,63 +175,127 @@ function HomeContent() {
               </div>
             </div>
 
-            {/* ✅ PROMOTIONAL BLOCKS */}
+            {/* ✅ PROMOTIONAL BLOCKS (CLEAN GRID UI) */}
             {selectedCategory === "All" && (
-              <div className="flex flex-wrap justify-center items-stretch gap-6 mb-16">
+              <div className="flex flex-wrap justify-center items-stretch gap-5 mb-16">
                 
                 {/* Block 1: Home */}
-                <Link href="/" className="w-[100%] md:w-[47%] lg:w-[23%] no-underline group">
-                  <div className="bg-white p-5 h-full flex flex-col justify-between shadow-sm border border-slate-200 rounded-2xl transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                <Link href="/" className="w-[100%] md:w-[48%] lg:w-[23.5%] no-underline group">
+                  <div className="bg-white p-5 h-full flex flex-col shadow-[0_2px_10px_-3px_rgba(0,0,0,0.08)] border border-slate-100 rounded-[16px] transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                     <h3 className="text-[17px] font-bold text-slate-800 mb-4">Revamp your home</h3>
-                    <div className="grid grid-cols-2 gap-3 mt-2 flex-grow">
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1584100936595-c0654b55a2e6?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Cushions</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1544457070-4cd773b4d71e?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Decor</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1595514535415-8aeac6f66318?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Storage</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Lighting</div>
+                    <div className="grid grid-cols-2 gap-x-3 gap-y-4 flex-grow mb-4">
+                      <div className="flex flex-col items-center">
+                        <img src="https://images.unsplash.com/photo-1584100936595-c0654b55a2e6?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[85px] object-cover rounded-lg mb-1.5" alt="Cushions" />
+                        <span className="text-[12px] font-medium text-slate-700">Cushions</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <img src="https://images.unsplash.com/photo-1544457070-4cd773b4d71e?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[85px] object-cover rounded-lg mb-1.5" alt="Decor" />
+                        <span className="text-[12px] font-medium text-slate-700">Decor</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <img src="https://images.unsplash.com/photo-1595514535415-8aeac6f66318?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[85px] object-cover rounded-lg mb-1.5" alt="Storage" />
+                        <span className="text-[12px] font-medium text-slate-700">Storage</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[85px] object-cover rounded-lg mb-1.5" alt="Lighting" />
+                        <span className="text-[12px] font-medium text-slate-700">Lighting</span>
+                      </div>
                     </div>
-                    <h4 className="mt-5 text-[14px] font-bold text-teal-600 flex items-center gap-1 group-hover:text-teal-800">Explore <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></h4>
+                    <div className="mt-auto">
+                      <span className="text-[14px] font-bold text-[#0d9488] flex items-center gap-1 group-hover:text-teal-800 transition-colors">
+                        Explore <ArrowRight size={16} />
+                      </span>
+                    </div>
                   </div>
                 </Link>
 
                 {/* Block 2: Appliances */}
-                <Link href="/" className="w-[100%] md:w-[47%] lg:w-[23%] no-underline group">
-                  <div className="bg-white p-5 h-full flex flex-col justify-between shadow-sm border border-slate-200 rounded-2xl transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                <Link href="/" className="w-[100%] md:w-[48%] lg:w-[23.5%] no-underline group">
+                  <div className="bg-white p-5 h-full flex flex-col shadow-[0_2px_10px_-3px_rgba(0,0,0,0.08)] border border-slate-100 rounded-[16px] transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                     <h3 className="text-[17px] font-bold text-slate-800 mb-4">Appliances | 55% off</h3>
-                    <div className="grid grid-cols-2 gap-3 mt-2 flex-grow">
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1620288627223-53302f4e8c74?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> ACs</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Washers</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1585659722983-38ca8da4e508?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Microwaves</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Fridges</div>
+                    <div className="grid grid-cols-2 gap-x-3 gap-y-4 flex-grow mb-4">
+                      <div className="flex flex-col items-center">
+                        <img src="https://images.unsplash.com/photo-1620288627223-53302f4e8c74?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[85px] object-cover rounded-lg mb-1.5" alt="ACs" />
+                        <span className="text-[12px] font-medium text-slate-700">ACs</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <img src="https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[85px] object-cover rounded-lg mb-1.5" alt="Washers" />
+                        <span className="text-[12px] font-medium text-slate-700">Washers</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <img src="https://images.unsplash.com/photo-1585659722983-38ca8da4e508?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[85px] object-cover rounded-lg mb-1.5" alt="Microwaves" />
+                        <span className="text-[12px] font-medium text-slate-700">Microwaves</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <img src="https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[85px] object-cover rounded-lg mb-1.5" alt="Fridges" />
+                        <span className="text-[12px] font-medium text-slate-700">Fridges</span>
+                      </div>
                     </div>
-                    <h4 className="mt-5 text-[14px] font-bold text-indigo-600 flex items-center gap-1 group-hover:text-indigo-800">Explore <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></h4>
+                    <div className="mt-auto">
+                      <span className="text-[14px] font-bold text-[#6366f1] flex items-center gap-1 group-hover:text-indigo-800 transition-colors">
+                        Explore <ArrowRight size={16} />
+                      </span>
+                    </div>
                   </div>
                 </Link>
 
                 {/* Block 3: Mobiles */}
-                <Link href="/" className="w-[100%] md:w-[47%] lg:w-[23%] no-underline group">
-                  <div className="bg-white p-5 h-full flex flex-col justify-between shadow-sm border border-slate-200 rounded-2xl transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                <Link href="/" className="w-[100%] md:w-[48%] lg:w-[23.5%] no-underline group">
+                  <div className="bg-white p-5 h-full flex flex-col shadow-[0_2px_10px_-3px_rgba(0,0,0,0.08)] border border-slate-100 rounded-[16px] transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                     <h3 className="text-[17px] font-bold text-slate-800 mb-4">Latest Mobiles</h3>
-                    <div className="grid grid-cols-2 gap-3 mt-2 flex-grow">
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Phones</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Buds</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Speakers</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Headsets</div>
+                    <div className="grid grid-cols-2 gap-x-3 gap-y-4 flex-grow mb-4">
+                      <div className="flex flex-col items-center">
+                        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[85px] object-cover rounded-lg mb-1.5" alt="Phones" />
+                        <span className="text-[12px] font-medium text-slate-700">Phones</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <img src="https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[85px] object-cover rounded-lg mb-1.5" alt="Buds" />
+                        <span className="text-[12px] font-medium text-slate-700">Buds</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[85px] object-cover rounded-lg mb-1.5" alt="Speakers" />
+                        <span className="text-[12px] font-medium text-slate-700">Speakers</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <img src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[85px] object-cover rounded-lg mb-1.5" alt="Headsets" />
+                        <span className="text-[12px] font-medium text-slate-700">Headsets</span>
+                      </div>
                     </div>
-                    <h4 className="mt-5 text-[14px] font-bold text-amber-600 flex items-center gap-1 group-hover:text-amber-800">Explore <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></h4>
+                    <div className="mt-auto">
+                      <span className="text-[14px] font-bold text-[#f59e0b] flex items-center gap-1 group-hover:text-amber-700 transition-colors">
+                        Explore <ArrowRight size={16} />
+                      </span>
+                    </div>
                   </div>
                 </Link>
 
                 {/* Block 4: Fashion */}
-                <Link href="/" className="w-[100%] md:w-[47%] lg:w-[23%] no-underline group">
-                  <div className="bg-white p-5 h-full flex flex-col justify-between shadow-sm border border-slate-200 rounded-2xl transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                <Link href="/" className="w-[100%] md:w-[48%] lg:w-[23.5%] no-underline group">
+                  <div className="bg-white p-5 h-full flex flex-col shadow-[0_2px_10px_-3px_rgba(0,0,0,0.08)] border border-slate-100 rounded-[16px] transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                     <h3 className="text-[17px] font-bold text-slate-800 mb-4">Fashion | 60% off</h3>
-                    <div className="grid grid-cols-2 gap-3 mt-2 flex-grow">
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Casuals</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1594938291221-94f18cbb5660?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Formals</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1533313264027-ec1be93c78ce?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Winter</div>
-                      <div className="text-[12px] text-center font-medium text-slate-700"><img src="https://images.unsplash.com/photo-1523206489230-c012c64b2b48?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[90px] object-cover rounded-xl mb-2 group-hover:scale-105 transition-transform bg-slate-100" /> Extras</div>
+                    <div className="grid grid-cols-2 gap-x-3 gap-y-4 flex-grow mb-4">
+                      <div className="flex flex-col items-center">
+                        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[85px] object-cover rounded-lg mb-1.5" alt="Casuals" />
+                        <span className="text-[12px] font-medium text-slate-700">Casuals</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <img src="https://images.unsplash.com/photo-1594938291221-94f18cbb5660?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[85px] object-cover rounded-lg mb-1.5" alt="Formals" />
+                        <span className="text-[12px] font-medium text-slate-700">Formals</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <img src="https://images.unsplash.com/photo-1533313264027-ec1be93c78ce?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[85px] object-cover rounded-lg mb-1.5" alt="Winter" />
+                        <span className="text-[12px] font-medium text-slate-700">Winter</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <img src="https://images.unsplash.com/photo-1523206489230-c012c64b2b48?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-[85px] object-cover rounded-lg mb-1.5" alt="Extras" />
+                        <span className="text-[12px] font-medium text-slate-700">Extras</span>
+                      </div>
                     </div>
-                    <h4 className="mt-5 text-[14px] font-bold text-pink-600 flex items-center gap-1 group-hover:text-pink-800">Explore <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" /></h4>
+                    <div className="mt-auto">
+                      <span className="text-[14px] font-bold text-[#db2777] flex items-center gap-1 group-hover:text-pink-800 transition-colors">
+                        Explore <ArrowRight size={16} />
+                      </span>
+                    </div>
                   </div>
                 </Link>
 
@@ -279,7 +343,7 @@ function HomeContent() {
             {/* Controls (Right Side) */}
             <div className="flex flex-wrap items-center gap-3">
               
-              {/* PRICE FILTER UI (Moved here) */}
+              {/* PRICE FILTER UI */}
               <div className="flex items-center gap-2 bg-white rounded-full shadow-sm border border-slate-200 py-1.5 px-3">
                 <span className="text-sm font-bold text-slate-500 hidden sm:block">Price:</span>
                 <input 
