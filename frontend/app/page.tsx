@@ -150,7 +150,7 @@ function HomeContent() {
                </div>
             </div>
 
-            {/* ✅ CATEGORY SLIDER (Bigger Capsule Style) */}
+            {/* ✅ CATEGORY SLIDER */}
             <div className="w-full mb-14 relative px-2">
               <div className="max-w-[1300px] mx-auto bg-white rounded-full shadow-md border border-slate-100 p-3 overflow-hidden relative">
                 <div className="category-scroll-container">
@@ -181,20 +181,16 @@ function HomeContent() {
                 
                 {/* --- BLOCK 1: HOME (Teal Theme) --- */}
                 <Link href="/" className="w-[100%] md:w-[47%] lg:w-[23%] no-underline relative group">
-                  {/* Glowing Background on Hover */}
                   <div className="absolute inset-0 bg-gradient-to-br from-teal-400 to-emerald-600 rounded-[32px] blur-xl opacity-0 group-hover:opacity-25 transition-opacity duration-700"></div>
                   
-                  {/* Main Card */}
                   <div className="relative bg-white p-4 h-full flex flex-col shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 rounded-[32px] transition-transform duration-500 hover:-translate-y-2">
                     
-                    {/* Header (No Explore Button) */}
+                    {/* Header */}
                     <div className="flex justify-between items-center mb-5 px-2 pt-2">
                       <h3 className="text-[19px] font-black text-slate-900 tracking-tight leading-none">Home Decor</h3>
                     </div>
 
-                    {/* Staggered Image Grid */}
                     <div className="flex flex-col gap-2 flex-grow">
-                      {/* Top Row: Wide Left, Small Right */}
                       <div className="grid grid-cols-5 gap-2 h-[115px]">
                         <div className="col-span-3 relative rounded-2xl overflow-hidden group/img">
                           <img src="https://images.unsplash.com/photo-1584100936595-c0654b55a2e6?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Cushions" />
@@ -207,7 +203,6 @@ function HomeContent() {
                           <div className="absolute bottom-2 left-2 backdrop-blur-md bg-black/30 border border-white/20 text-white text-[10px] uppercase tracking-wide font-bold px-3 py-1.5 rounded-full">Decor</div>
                         </div>
                       </div>
-                      {/* Bottom Row: Small Left, Wide Right */}
                       <div className="grid grid-cols-5 gap-2 h-[115px]">
                         <div className="col-span-2 relative rounded-2xl overflow-hidden group/img">
                           <img src="https://images.unsplash.com/photo-1595514535415-8aeac6f66318?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Storage" />
@@ -230,14 +225,12 @@ function HomeContent() {
                   
                   <div className="relative bg-white p-4 h-full flex flex-col shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 rounded-[32px] transition-transform duration-500 hover:-translate-y-2">
                     
-                    {/* Header (No Explore Button) */}
                     <div className="flex justify-between items-center mb-5 px-2 pt-2">
                       <h3 className="text-[19px] font-black text-slate-900 tracking-tight leading-none">Appliances</h3>
                       <span className="bg-slate-900 text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-md animate-pulse">55% OFF</span>
                     </div>
 
                     <div className="flex flex-col gap-2 flex-grow">
-                      {/* Alternate Pattern: Small Left, Wide Right */}
                       <div className="grid grid-cols-5 gap-2 h-[115px]">
                         <div className="col-span-2 relative rounded-2xl overflow-hidden group/img">
                           <img src="https://images.unsplash.com/photo-1620288627223-53302f4e8c74?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="ACs" />
@@ -250,7 +243,6 @@ function HomeContent() {
                           <div className="absolute bottom-2 left-2 backdrop-blur-md bg-black/30 border border-white/20 text-white text-[10px] uppercase tracking-wide font-bold px-3 py-1.5 rounded-full">Washers</div>
                         </div>
                       </div>
-                      {/* Wide Left, Small Right */}
                       <div className="grid grid-cols-5 gap-2 h-[115px]">
                         <div className="col-span-3 relative rounded-2xl overflow-hidden group/img">
                           <img src="https://images.unsplash.com/photo-1585659722983-38ca8da4e508?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Microwaves" />
@@ -273,7 +265,6 @@ function HomeContent() {
                   
                   <div className="relative bg-white p-4 h-full flex flex-col shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 rounded-[32px] transition-transform duration-500 hover:-translate-y-2">
                     
-                    {/* Header (No Explore Button) */}
                     <div className="flex justify-between items-center mb-5 px-2 pt-2">
                       <h3 className="text-[19px] font-black text-slate-900 tracking-tight leading-none">Mobiles</h3>
                     </div>
@@ -313,7 +304,6 @@ function HomeContent() {
                   
                   <div className="relative bg-white p-4 h-full flex flex-col shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 rounded-[32px] transition-transform duration-500 hover:-translate-y-2">
                     
-                    {/* Header (No Explore Button) */}
                     <div className="flex justify-between items-center mb-5 px-2 pt-2">
                       <h3 className="text-[19px] font-black text-slate-900 tracking-tight leading-none">Fashion</h3>
                       <span className="bg-slate-900 text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-md animate-pulse">60% OFF</span>
