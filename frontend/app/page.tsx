@@ -175,7 +175,7 @@ function HomeContent() {
               </div>
             </div>
 
-           {/* ✅ PROMOTIONAL BLOCKS (PREMIUM STAGGERED MOSAIC & GLASSMORPHISM) */}
+            {/* ✅ PROMOTIONAL BLOCKS (PREMIUM STAGGERED MOSAIC - NO EXPLORE BUTTON) */}
             {selectedCategory === "All" && (
               <div className="flex flex-wrap justify-center items-stretch gap-6 mb-16 px-2">
                 
@@ -187,14 +187,9 @@ function HomeContent() {
                   {/* Main Card */}
                   <div className="relative bg-white p-4 h-full flex flex-col shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 rounded-[32px] transition-transform duration-500 hover:-translate-y-2">
                     
-                    {/* Header */}
-                    <div className="flex justify-between items-start mb-5 px-2 pt-2">
-                      <div>
-                        <h3 className="text-[19px] font-black text-slate-900 tracking-tight leading-none mb-2">Home Decor</h3>
-                        <span className="text-[13px] font-bold text-teal-600 flex items-center gap-1">
-                          Explore <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                        </span>
-                      </div>
+                    {/* Header (No Explore Button) */}
+                    <div className="flex justify-between items-center mb-5 px-2 pt-2">
+                      <h3 className="text-[19px] font-black text-slate-900 tracking-tight leading-none">Home Decor</h3>
                     </div>
 
                     {/* Staggered Image Grid */}
@@ -235,13 +230,9 @@ function HomeContent() {
                   
                   <div className="relative bg-white p-4 h-full flex flex-col shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 rounded-[32px] transition-transform duration-500 hover:-translate-y-2">
                     
-                    <div className="flex justify-between items-start mb-5 px-2 pt-2">
-                      <div>
-                        <h3 className="text-[19px] font-black text-slate-900 tracking-tight leading-none mb-2">Appliances</h3>
-                        <span className="text-[13px] font-bold text-indigo-600 flex items-center gap-1">
-                          Explore <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                        </span>
-                      </div>
+                    {/* Header (No Explore Button) */}
+                    <div className="flex justify-between items-center mb-5 px-2 pt-2">
+                      <h3 className="text-[19px] font-black text-slate-900 tracking-tight leading-none">Appliances</h3>
                       <span className="bg-slate-900 text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-md animate-pulse">55% OFF</span>
                     </div>
 
@@ -282,13 +273,9 @@ function HomeContent() {
                   
                   <div className="relative bg-white p-4 h-full flex flex-col shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 rounded-[32px] transition-transform duration-500 hover:-translate-y-2">
                     
-                    <div className="flex justify-between items-start mb-5 px-2 pt-2">
-                      <div>
-                        <h3 className="text-[19px] font-black text-slate-900 tracking-tight leading-none mb-2">Mobiles</h3>
-                        <span className="text-[13px] font-bold text-amber-600 flex items-center gap-1">
-                          Explore <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                        </span>
-                      </div>
+                    {/* Header (No Explore Button) */}
+                    <div className="flex justify-between items-center mb-5 px-2 pt-2">
+                      <h3 className="text-[19px] font-black text-slate-900 tracking-tight leading-none">Mobiles</h3>
                     </div>
 
                     <div className="flex flex-col gap-2 flex-grow">
@@ -326,13 +313,9 @@ function HomeContent() {
                   
                   <div className="relative bg-white p-4 h-full flex flex-col shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 rounded-[32px] transition-transform duration-500 hover:-translate-y-2">
                     
-                    <div className="flex justify-between items-start mb-5 px-2 pt-2">
-                      <div>
-                        <h3 className="text-[19px] font-black text-slate-900 tracking-tight leading-none mb-2">Fashion</h3>
-                        <span className="text-[13px] font-bold text-rose-600 flex items-center gap-1">
-                          Explore <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-                        </span>
-                      </div>
+                    {/* Header (No Explore Button) */}
+                    <div className="flex justify-between items-center mb-5 px-2 pt-2">
+                      <h3 className="text-[19px] font-black text-slate-900 tracking-tight leading-none">Fashion</h3>
                       <span className="bg-slate-900 text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-md animate-pulse">60% OFF</span>
                     </div>
 
@@ -367,6 +350,7 @@ function HomeContent() {
 
               </div>
             )}
+
             {/* ✅ RANDOMIZED HORIZONTAL SCROLL ROWS */}
             {selectedCategory === "All" && products.length > 0 && (
               <div className="mb-16">
