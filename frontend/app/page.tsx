@@ -210,7 +210,7 @@ function HomeContent() {
                           <div className="absolute bottom-2 left-2 backdrop-blur-md bg-black/30 border border-white/20 text-white text-[10px] uppercase tracking-wide font-bold px-3 py-1.5 rounded-full">Storage</div>
                         </div>
                         <div className="col-span-3 relative rounded-2xl overflow-hidden group/img">
-                          <img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Lighting" />
+                          <img src="https://woodshells.co.in/wp-content/uploads/2025/05/A37I3769-min-scaled-e1672155249110.jpg" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Lighting" />
                           <div className="absolute inset-0 bg-black/10 group-hover/img:bg-black/30 transition-colors duration-500"></div>
                           <div className="absolute bottom-2 left-2 backdrop-blur-md bg-black/30 border border-white/20 text-white text-[10px] uppercase tracking-wide font-bold px-3 py-1.5 rounded-full">Lighting</div>
                         </div>
@@ -271,7 +271,7 @@ function HomeContent() {
                     <div className="flex flex-col gap-2 flex-grow">
                       <div className="grid grid-cols-5 gap-2 h-[115px]">
                         <div className="col-span-3 relative rounded-2xl overflow-hidden group/img">
-                          <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Phones" />
+                          <img src="https://cdn.mos.cms.futurecdn.net/aFZoQKNZwEnee8m63KTyeD.jpg" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Phones" />
                           <div className="absolute inset-0 bg-black/10 group-hover/img:bg-black/30 transition-colors duration-500"></div>
                           <div className="absolute bottom-2 left-2 backdrop-blur-md bg-black/30 border border-white/20 text-white text-[10px] uppercase tracking-wide font-bold px-3 py-1.5 rounded-full">Phones</div>
                         </div>
@@ -283,7 +283,7 @@ function HomeContent() {
                       </div>
                       <div className="grid grid-cols-5 gap-2 h-[115px]">
                         <div className="col-span-2 relative rounded-2xl overflow-hidden group/img">
-                          <img src="https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&q=80" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Speakers" />
+                          <img src="https://helios-i.mashable.com/imagery/reviews/06Nb9YbigJ8aBaCuqhpyFsf/hero-image.fill.size_1248x702.v1712801670.jpg" referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" alt="Speakers" />
                           <div className="absolute inset-0 bg-black/10 group-hover/img:bg-black/30 transition-colors duration-500"></div>
                           <div className="absolute bottom-2 left-2 backdrop-blur-md bg-black/30 border border-white/20 text-white text-[10px] uppercase tracking-wide font-bold px-3 py-1.5 rounded-full">Speakers</div>
                         </div>
