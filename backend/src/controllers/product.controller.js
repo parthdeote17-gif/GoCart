@@ -1,5 +1,5 @@
-import pool from "../config/db.js"; // ✅ DB connection import kiya recommendations fetch karne ke liye
-import jwt from "jsonwebtoken"; // 🌟 NAYA IMPORT: Token decode karne ke liye
+import pool from "../config/db.js"; // ✅ DB connection
+import jwt from "jsonwebtoken"; // 🌟 For manual token decoding
 
 import { 
   getAllProducts, 
@@ -67,7 +67,7 @@ export const getCategories = async (req, res) => {
 };
 
 // ==========================================
-// 🌟 UPDATED: Product Detail (With Smart Token Check)
+// 🌟 Product Detail (Smart Token Check)
 // ==========================================
 export const productDetail = async (req, res) => {
   try {
@@ -78,30 +78,24 @@ export const productDetail = async (req, res) => {
     
     if (!product) return res.status(404).json({message: "Not found"});
 
-    console.log("👉 Product Page khula! ID:", id);
+    console.log("👉 Product Page opened! ID:", id);
 
-    // 🌟 THE FIX: Manually Check Token for Public Routes
-    let userId = req.user?.id; // Agar router se mila toh thik hai
+    let userId = req.user?.id; 
 
-    // Agar req.user nahi hai, par frontend ne header me token bheja hai
     if (!userId && req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         try {
             const token = req.headers.authorization.split(' ')[1];
-            // Token ko decode karke user id nikalo
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             userId = decoded.id;
         } catch (error) {
-            console.log("⚠️ Token decode nahi ho paya (shayad expire ho gaya hai).");
+            console.log("⚠️ Token decode failed.");
         }
     }
 
-    // ✅ Ab agar userId mil gaya, toh interaction log kar do
     if (userId) {
-        console.log("👉 Database me entry ja rahi hai user ke liye:", userId);
+        console.log("👉 Logging interaction for user:", userId);
         await logInteraction(userId, id, 'VIEW', 1);
-    } else {
-        console.log("⚠️ ERROR: User ka token nahi mila, isliye database me record nahi hua.");
-    }
+    } 
     
     res.json(product);
   } catch (err) {
@@ -119,31 +113,43 @@ export const getRelatedProducts = async (req, res) => {
   }
 };
 
+// ==========================================
+// 🌟 Recommended For User (Dual-Environment Support)
+// ==========================================
 export const getRecommendedForUser = async (req, res) => {
     try {
         const userId = req.user.id;
-        console.log("👉 1. Node.js asking Python for User ID:", userId);
         
-        const pyResponse = await fetch(`http://127.0.0.1:8000/recommend/${userId}`);
+        // Uses ENV variable on Render, defaults to localhost:8000 for local dev
+        const pythonUrl = process.env.PYTHON_ML_SERVICE_URL || "http://127.0.0.1:8000";
+        
+        console.log(`👉 Calling ML Service at: ${pythonUrl}/recommend/${userId}`);
+
+        const pyResponse = await fetch(`${pythonUrl}/recommend/${userId}`);
+        
+        // Safe check if Python service is down
+        if (!pyResponse.ok) {
+            console.warn("⚠️ Python service unreachable or returned error.");
+            return res.json([]); 
+        }
+
         const data = await pyResponse.json();
-        
-        console.log("👉 2. Python ne yeh IDs bheji:", data);
+        const productIds = data.recommended_product_ids || [];
 
-        const productIds = data.recommended_product_ids;
-
-        if (!productIds || productIds.length === 0) {
-             console.log("👉 3. WARNING: Python ne khali list bheji!");
+        if (productIds.length === 0) {
+             console.log("👉 3. WARNING: Python sent an empty list!");
              return res.json([]); 
         }
 
         const query = `SELECT * FROM products WHERE id = ANY($1::int[])`;
         const result = await pool.query(query, [productIds]);
         
-        console.log("👉 4. Database se itne products mile:", result.rows.length);
+        console.log("👉 4. Products found in database:", result.rows.length);
 
         res.json(result.rows);
     } catch (err) {
         console.error("❌ ML Engine Error:", err.message);
-        res.status(500).json({ message: "Unable to fetch recommendations" });
+        // Fail-safe: sending empty array to prevent UI crash
+        res.status(200).json([]); 
     }
 };

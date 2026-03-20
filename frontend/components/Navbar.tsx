@@ -210,9 +210,15 @@ export default function Navbar() {
           </div>
         </form>
 
-        {/* 3. ACTIONS & PROFILE (Original) */}
+        {/* 3. ACTIONS & PROFILE (Original + Go AI Button) */}
         <div className="flex items-center gap-5 shrink-0">
           
+          {/* ✨ NAYA GO AI BUTTON YAHAN ADD HUA HAI */}
+          <Link href="/ai" className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-full font-bold shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:-translate-y-0.5 transition-all active:scale-95">
+            <Sparkles size={16} />
+            <span>Go AI</span>
+          </Link>
+
           <div className="flex items-center gap-1">
             {/* Wishlist Icon */}
             <Link href="/wishlist" className="p-2.5 text-slate-600 hover:text-rose-600 transition-all hover:bg-rose-50 rounded-full active:scale-90 duration-200">

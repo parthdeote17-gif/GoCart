@@ -8,7 +8,8 @@ import cartRoutes from "./routes/cart.routes.js";
 import orderRoutes from "./routes/order.routes.js"; 
 import reviewRoutes from "./routes/review.routes.js"; 
 import userRoutes from "./routes/user.routes.js"; 
-import wishlistRoutes from "./routes/wishlist.routes.js"; // ✅ Wishlist Route Import
+import wishlistRoutes from "./routes/wishlist.routes.js";
+import aiRoutes from "./routes/ai.routes.js"; // 👈 NAYA IMPORT: Go AI Route
 
 const app = express();
 
@@ -31,5 +32,6 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/wishlist", wishlistRoutes); // ✅ Wishlist API Active
+app.use("/api/ai", aiRoutes);             // 👈 NAYA ROUTE: AI API Active
 
 export default app;
