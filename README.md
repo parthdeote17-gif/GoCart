@@ -216,6 +216,6 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
 <div align="center">
 
-Made with ❤️ by a 4-member engineering team
+
 
 </div>
