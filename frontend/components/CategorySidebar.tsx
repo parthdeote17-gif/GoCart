@@ -19,7 +19,7 @@ export default function CategorySidebar({ onSelect, selected }: Props) {
     });
   }, []);
 
-  // Logic: Agar showAll true hai toh sab dikhao, nahi toh sirf top 5
+  // Logic: Display all items if showAll is true; otherwise, display only the top five.
   const visibleCategories = showAll ? categories : categories.slice(0, 5);
 
   return (
