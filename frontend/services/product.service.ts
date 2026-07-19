@@ -11,15 +11,15 @@ export interface Product {
   description?: string;
 }
 
-// ✅ Updated: Added 'minPrice' and 'maxPrice' for price filtering
+// Updated: Added 'minPrice' and 'maxPrice' for price filtering
 export async function getProducts(
   category: string = "All", 
   page: number = 1, 
   limit: number = 20, 
   search: string = "",
   random: boolean = false, // 🆕 New Parameter
-  minPrice?: string | null, // ✅ Price Filter parameter
-  maxPrice?: string | null  // ✅ Price Filter parameter
+  minPrice?: string | null, // Price Filter parameter
+  maxPrice?: string | null  // Price Filter parameter
 ) {
   try {
     const params = new URLSearchParams();
@@ -33,12 +33,12 @@ export async function getProducts(
       params.append("search", search);
     }
 
-    // ✅ Random Logic: Agar random true hai to backend ko batao
+    // Logic: Notify the backend if the random flag is set to true.
     if (random) {
       params.append("random", "true");
     }
 
-    // ✅ Price Logic: Agar price limits hain to backend ko bhejo
+    //Logic: Send the price limits to the backend if they are specified
     if (minPrice) {
       params.append("minPrice", minPrice);
     }
@@ -76,22 +76,22 @@ export async function getProductById(id: string | number) {
   }
 }
 
-// ✅ NEW FUNCTION: Fetch Related Products
+// NEW FUNCTION: Fetch Related Products
 export async function getRelatedProducts(id: string | number) {
   try {
-    // Ye route backend mein humne abhi banaya hai: /api/products/:id/related
+    // New backend route: /api/products/:id/related
     return await apiFetch(`/products/${id}/related`);
   } catch (error) {
     console.error(`Error fetching related products for ${id}:`, error);
-    return []; // Empty array return karo taaki UI crash na ho
+    return []; //Return an empty array to prevent the UI from crashing
   }
 }
 
-// ✅ NEW FUNCTION: Fetch Search Suggestions (Autocomplete ke liye)
+// New function: Fetch search suggestions for autocomplete
 export async function fetchSearchSuggestions(query: string) {
   if (!query) return [];
   try {
-    // Ye backend ke naye route (/products/suggestions) ko call karega
+    // Call the new backend route (/products/suggestions) to fetch search suggestions
     return await apiFetch(`/products/suggestions?q=${encodeURIComponent(query)}`);
   } catch (error) {
     console.error("Error fetching search suggestions:", error);
@@ -100,18 +100,18 @@ export async function fetchSearchSuggestions(query: string) {
 }
 
 // ==========================================
-// 🌟 NEW FUNCTION: Fetch ML Recommendations (Safe Version)
+//  NEW FUNCTION: Fetch ML Recommendations (Safe Version)
 // ==========================================
 export async function getRecommendations() {
   try {
     const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
     
-    // Agar login nahi hai toh khali list bhej do, API call mat karo
+    //Skip the API call and return an empty list if the user is not logged in
     if (!token) return [];
 
     const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
     
-    // 🌟 THE FIX: apiFetch ki jagah direct fetch use kar rahe hain taaki Red Screen na aaye
+    // Fix: Use the native fetch instead of apiFetch to prevent the red screen error
     const res = await fetch(`${BASE_URL}/products/recommendations`, {
       method: 'GET',
       headers: {
@@ -120,7 +120,7 @@ export async function getRecommendations() {
       }
     });
 
-    // Agar backend ne 500 ya 400 error diya, toh crash mat ho, khali list dedo
+    //Handle 400 and 500 backend errors gracefully by returning an empty list instead of crashing
     if (!res.ok) {
         console.warn("⚠️ Recommendations abhi ready nahi hain (API Error).");
         return []; 
@@ -130,7 +130,7 @@ export async function getRecommendations() {
     return Array.isArray(data) ? data : [];
     
   } catch (error) {
-    console.warn("⚠️ Recommendation fetch fail hua:", error);
+    console.warn("⚠️ Recommendation fetch failed:", error);
     return []; // UI crash hone se bach jayega
   }
 }
