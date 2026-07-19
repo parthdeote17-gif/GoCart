@@ -1,6 +1,6 @@
 "use client";
 
-// ✅ 1. ADDED: This line fixes the Vercel prerendering error for pages using useSearchParams
+// 1. ADDED: This line fixes the Vercel prerendering error for pages using useSearchParams
 export const dynamic = "force-dynamic";
 
 import { useEffect, useState, Suspense, useRef } from "react"; 
@@ -13,7 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
-// ✅ SLIDER IMAGES KEPT AS ORIGINAL
+// SLIDER IMAGES KEPT AS ORIGINAL
 const sliderImages = [
   "/banner1.png", 
   "/banner2.png",
@@ -42,7 +42,7 @@ function HomeContent() {
   const [categories, setCategories] = useState<any[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // ✅ FIX: Hydration error se bachne ke liye token ko state mein rakha
+  // Fix: Store the authentication token in state to prevent hydration errors
   const [hasToken, setHasToken] = useState(false);
 
   useEffect(() => {
@@ -54,7 +54,7 @@ function HomeContent() {
   const isRandomFeed = !searchQuery && !urlMinPrice && !urlMaxPrice; 
 
   // =====================================================================
-  // ✅ 1. MAIN GRID CALL (Hamesha limit 30, jisse pagination stable rahe)
+  //  1.Main grid request: Always use a limit of 30 to keep pagination stable
   // =====================================================================
   const { data: mainData, isLoading } = useQuery({
     queryKey: ['mainProducts', selectedCategory, page, searchQuery, isRandomFeed, urlMinPrice, urlMaxPrice], 
@@ -66,7 +66,7 @@ function HomeContent() {
   const totalPages = mainData?.pagination?.totalPages || 1;
 
   // =====================================================================
-  // ✅ 2. BANNER CALL (Sirf page 1 pe, Fetch 40 items taaki View All kaam kare!)
+  // ✅ 2.Banner request: Fetch 40 items only on the first page to support the "View All" feature
   // =====================================================================
   const showBanners = selectedCategory === "All" && page === 1 && isRandomFeed;
   
@@ -90,9 +90,9 @@ function HomeContent() {
   const { data: recommendedData } = useQuery({
     queryKey: ['recommendedProducts', hasToken], 
     queryFn: getRecommendations, 
-    staleTime: 0,               // 👈 FIX: Puraana data cache nahi karega
-    refetchOnMount: true,       // 👈 FIX: Page load hote hi turant naya data layega
-    refetchOnWindowFocus: true, // 👈 FIX: Tab switch karke wapas aane pe update hoga
+    staleTime: 0,               //  FIX: Prevent caching of old data
+    refetchOnMount: true,       //  FIX: Fetch the latest data immediately when the page loads
+    refetchOnWindowFocus: true, //  FIX: Refresh the data when the user returns after switching tabs
     enabled: showBanners && hasToken 
   });
 
@@ -142,7 +142,7 @@ function HomeContent() {
 
   const isMounted = useRef(false);
 
-  // ✅ NAVBAR SEARCH SUGGESTION YA CATEGORY CLICK HONE PE SCROLL
+  // Scroll to the results when a navbar search suggestion or category is selected
   useEffect(() => {
     if (!isMounted.current) {
       isMounted.current = true;
@@ -420,7 +420,7 @@ function HomeContent() {
               </div>
             )}
 
-            {/* ✅ BANNERS WITH NEW DYNAMIC ARRAY DATA & ML RECOMMENDATIONS */}
+            {/*  BANNERS WITH NEW DYNAMIC ARRAY DATA & ML RECOMMENDATIONS */}
             {showBanners && (
               <div className="mb-16">
                 
@@ -699,13 +699,13 @@ function HomeContent() {
 function HorizontalScrollRow({ title, products, accentColor }: { title: string, products: any[], accentColor: string }) {
   const [isExpanded, setIsExpanded] = useState(false);
   
-  // ✅ FIX: Ab expand hone par array ke saare items dikhayega, warna sirf 10 dikhayega
+  
   const displayLimit = isExpanded ? products.length : 10;
   const rowProducts = Array.isArray(products) ? products.slice(0, displayLimit) : [];
 
   if (rowProducts.length === 0) return null;
 
-  // ✅ Button sirf tab aayega jab actual items 10 se zyada ho 
+   
   const hasMore = products.length > 10;
 
   return (
