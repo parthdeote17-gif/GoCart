@@ -35,7 +35,7 @@ export default function Navbar() {
     }
   }, []);
 
-  // ✅ Fetch Suggestions jab type kare (Debounce ke sath)
+  // Fetch search suggestions as the user types using debouncing
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       if (searchTerm.trim().length >= 2) {
@@ -53,7 +53,7 @@ export default function Navbar() {
     return () => clearTimeout(delayDebounceFn);
   }, [searchTerm]);
 
-  // ✅ Bahar click karne par dropdown band ho jaye
+  // Close the dropdown when clicking outside of it
   useEffect(() => {
     function handleClickOutside(event: any) {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -73,7 +73,7 @@ export default function Navbar() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    setShowSuggestions(false); // ✅ Search pe click karne k baad dropdown band
+    setShowSuggestions(false); // Close the dropdown after clicking the search button
     if (searchTerm.trim()) {
       router.push(`/?search=${encodeURIComponent(searchTerm.trim())}`);
     } else {
