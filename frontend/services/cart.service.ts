@@ -1,7 +1,7 @@
-import { apiFetch } from "./api"; // ✅ Humne jo api.ts fix kiya tha, usko import kiya
+import { apiFetch } from "./api"; // Imported the updated api.ts configuration
 
 export async function getCart() {
-  // apiFetch khud Token, Ngrok Header aur sahi URL laga lega
+  // apiFetch automatically handles the authentication token, ngrok header, and the correct API base URL
   return apiFetch("/cart", { 
     cache: 'no-store' // Data fresh rakhne ke liye
   });
