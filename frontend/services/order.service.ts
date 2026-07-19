@@ -16,7 +16,7 @@ export async function getOrders() {
   return await apiFetch("/orders");
 }
 
-// NEW: Checkout page isko call karega Address ID ke saath
+// New: This will be called by the Checkout page with the Address ID
 export async function placeOrder(addressId: number) {
   return await apiFetch("/orders", {
     method: "POST",
