@@ -2,7 +2,7 @@ import { apiFetch } from "./api";
 
 export interface Review {
   id: number;
-  user_id: number; // Ownership check ke liye
+  user_id: number; // Ownership check 
   user_name?: string;  
   user_email?: string; 
   rating: number;
@@ -53,14 +53,14 @@ export async function addReview(
   }
 }
 
-// ✅ NEW: Delete Review Helper
+//  NEW: Delete Review Helper
 export async function deleteReviewService(reviewId: number) {
   return await apiFetch(`/reviews/${reviewId}`, {
     method: "DELETE",
   });
 }
 
-// ✅ NEW: Edit Review Helper
+// NEW: Edit Review Helper
 export async function editReviewService(reviewId: number, rating: number, comment: string) {
   return await apiFetch(`/reviews/${reviewId}`, {
     method: "PUT",
