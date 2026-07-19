@@ -9,7 +9,7 @@ export async function login(email: string, password: string) {
   
   if (data.token) {
     localStorage.setItem("token", data.token);
-    // UPDATE: User ka data save karna zaroori hai taaki Profile page aur Navbar par Naam dikhe
+    //Update: Store user data to display the user's name on the Profile page and Navbar
     localStorage.setItem("user", JSON.stringify(data.user)); 
   }
   return data;
@@ -23,7 +23,7 @@ export async function sendOtp(email: string) {
   });
 }
 
-// Register (Updated: Parameter 'otp' liya aur backend ko 'code' bheja)
+// Update: Added the otp parameter and sent it to the backend as code during registration
 export async function register(email: string, password: string, otp: string, firstName: string, lastName: string) {
   return apiFetch("/auth/register", {
     method: "POST",
