@@ -12,7 +12,7 @@ export const updateUserProfile = async (data: any) => {
   });
 };
 
-// --- ✅ Address CRUD Functions ---
+// ---  Address CRUD Functions ---
 
 export const getAddresses = async () => {
   return await apiFetch("/user/address");
