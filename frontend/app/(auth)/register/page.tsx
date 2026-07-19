@@ -54,7 +54,7 @@ export default function RegisterPage() {
       localStorage.setItem("user", JSON.stringify(res.user));
       
       alert("Account Created! Redirecting...");
-      // ✅ CHANGE: Force reload to update Navbar state immediately
+      //  CHANGE: Force reload to update Navbar state immediately
       window.location.href = "/"; 
     } catch (err: any) {
       alert(err.message || "Registration Failed");
