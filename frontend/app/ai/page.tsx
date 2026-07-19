@@ -4,11 +4,11 @@ import { useState, useEffect, useRef } from "react";
 import { apiFetch } from "@/services/api";
 import { getRecommendations } from "@/services/product.service";
 import { addToCart } from "@/services/cart.service";
-import { toggleWishlist } from "@/services/wishlist.service"; // ✅ FIXED: addToWishlist ki jagah toggleWishlist
+import { toggleWishlist } from "@/services/wishlist.service"; 
 import ProductCard from "@/components/ProductCard";
 import { Sparkles, Send, Bot, User, ArrowLeft, Loader2, ShoppingBag } from "lucide-react";
 import { useRouter } from "next/navigation";
-import Link from "next/link"; // ✅ NAYA: Login redirect ke liye
+import Link from "next/link"; 
 
 type ChatMessage = {
   role: string;
@@ -19,13 +19,13 @@ type ChatMessage = {
 
 export default function GoAIPage() {
   const router = useRouter();
-  // Hydration mismatch avoid karne ke liye initial state empty rakhi hai
+  // Initialize the state as empty to prevent hydration mismatch
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [recommendedProducts, setRecommendedProducts] = useState<any[]>([]);
   
-  // ✅ NAYA: Auth Check States
+  // New: Authentication Check States
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [authLoading, setAuthLoading] = useState(true);
 
@@ -34,7 +34,7 @@ export default function GoAIPage() {
 
   // 1. Initial Auth Check & Scroll To Top
   useEffect(() => {
-    // ✅ FIX: Page load hote hi top par scroll karega
+    // Fix: Automatically scroll to the top when the page loads.
     window.scrollTo(0, 0);
 
     const token = localStorage.getItem("token");
@@ -75,7 +75,7 @@ export default function GoAIPage() {
 
   // 4. Smart Scroll: Scroll only the chat container when messages or loading state change
   useEffect(() => {
-    // ✅ FIX: Smart scroll sirf tabhi chalega jab logged in ho
+    // Fix: Enable smart scrolling only for logged-in users.
     if (isLoggedIn && chatContainerRef.current) {
       chatContainerRef.current.scrollTo({
         top: chatContainerRef.current.scrollHeight,
@@ -113,7 +113,7 @@ export default function GoAIPage() {
       } 
       else if (res.action === "add_to_wishlist" && res.action_product_id) {
         try {
-          await toggleWishlist(res.action_product_id); // ✅ FIXED Call
+          await toggleWishlist(res.action_product_id); //  FIXED Call
           actionStatus = "❤️ Item saved to your Wishlist!";
         } catch(err) { 
           actionStatus = "❌ Failed to add to wishlist. Please try again."; 
@@ -137,11 +137,11 @@ export default function GoAIPage() {
     }
   };
 
-  // ✅ Jab tak Auth check ho raha hai, tab tak blank page dikhao (flicker rokne ke liye)
+  // Display a blank page while the authentication check is in progress to prevent UI flickering
   if (authLoading) return null;
 
   // ==========================================
-  // 🚫 LOGGED OUT UI: Agar user login nahi hai
+  //  LOGGED OUT UI: If user is not logon
   // ==========================================
   if (!isLoggedIn) {
     return (
@@ -284,7 +284,7 @@ export default function GoAIPage() {
             </div>
           </div>
 
-          {/* 🛍️ RIGHT SIDE: ML RECOMMENDATIONS */}
+          {/*  RIGHT SIDE: ML RECOMMENDATIONS */}
           <div className="xl:w-[500px] 2xl:w-[600px] flex flex-col h-full bg-white/60 backdrop-blur-xl border border-white rounded-[2.5rem] shadow-xl overflow-hidden">
             
             <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white shrink-0">
