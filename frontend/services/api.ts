@@ -2,15 +2,15 @@
 // CONFIGURATION (SMART SWITCH)
 // ==========================================
 
-// 1. Localhost URL (Jab tu laptop pe develop karega)
+// 1.Localhost URL (Used during local development)
 const LOCAL_URL = "http://127.0.0.1:5000/api";
 
-// 2. Production URL (Tera Render wala backend)
+// 2. Production URL (Render deployment backend)
 const PROD_URL = "https://gocart-6iyu.onrender.com/api";
 
-// ✅ AUTO-DETECTION: 
-// Agar app Vercel pe hai toh PROD use karega, 
-// Agar laptop pe 'npm run dev' chal raha hai toh LOCAL use karega.
+//  AUTO-DETECTION: 
+
+
 const BASE_URL = 
   process.env.NEXT_PUBLIC_API_URL || 
   (process.env.NODE_ENV === "development" ? LOCAL_URL : PROD_URL);
@@ -21,18 +21,18 @@ console.log(`🚀 API Running on: ${process.env.NODE_ENV === "development" ? "Lo
  * Common API fetch wrapper
  */
 export async function apiFetch(endpoint: string, options: RequestInit = {}) {
-  // Token ko safe tarike se fetch karna
+  // Securely retrieve the authentication token
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
   try {
     const res = await fetch(`${BASE_URL}${endpoint}`, {
       ...options,
-      // ✅ CORS aur Cookies ke liye important (Auth ke liye zaroori hai)
+      //  Required for CORS and cookie-based authentication
       credentials: "include", 
       
       headers: {
         "Content-Type": "application/json",
-        // ✅ Ngrok warning hatane ke liye (Future proofing)
+        //  Added support to bypass the ngrok browser warning for future compatibility
         "ngrok-skip-browser-warning": "true",
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...options.headers,
