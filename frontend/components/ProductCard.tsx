@@ -58,7 +58,7 @@ export default function ProductCard({
     }
   };
 
-  // ✅ Sirf yahan update kiya gaya hai (Login check ke liye try-catch)
+  // Updated only this section by adding a try-catch block for authentication checks
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -72,12 +72,12 @@ export default function ProductCard({
   };
 
   return (
-    // ✅ Card Size: 'aspect-[4/5]' (Compact)
+    //  Card Size: 'aspect-[4/5]' (Compact)
     <div className="group relative aspect-[4/5] bg-white rounded-[1.5rem] overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300">
       
       {/* 1. IMAGE AREA */}
-      {/* ✅ 'p-4' Padding di taaki image border se chipke na */}
-      {/* ✅ 'pb-24' Bottom space taaki image text area ke upar rahe */}
+      {/*  Added p-4 padding to prevent the image from touching the border */}
+      {/*  Added bottom padding (pb-24) to keep the image above the text area */}
       <div className="absolute inset-0 p-4 pb-24 flex items-center justify-center bg-white z-0">
         <Link href={`/product/${product.id || product.product_id}`} className="w-full h-full flex items-center justify-center relative">
           <img
@@ -129,7 +129,7 @@ export default function ProductCard({
 
       {/* 3. INFO LAYER - TRANSPARENT BACKGROUND */}
       <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none">
-        {/* ✅ Gradient Background: Text saaf dikhega par white box image ko nahi dhakega */}
+        {/*  Added a gradient background to improve text readability without covering the image with a white overlay */}
         <div className="bg-gradient-to-t from-white via-white/80 to-transparent pt-10 pb-4 px-4">
           
           <div className="flex items-center justify-between mb-1">
@@ -156,7 +156,7 @@ export default function ProductCard({
                </div>
             </div>
 
-            {/* ✅ Cart Button Wapas aa gaya (Small & Cute) */}
+            {/* Restored the cart button with a smaller and more compact design. */}
             <button
               onClick={handleAddToCart}
               className="h-8 w-8 rounded-full bg-slate-900 text-white flex items-center justify-center shadow-md hover:bg-indigo-600 transition-colors"
