@@ -23,7 +23,7 @@ export default function CheckoutPage() {
 
   const handleProceedToPayment = () => {
     if (!selectedAddr) return alert("Please select an address");
-    // Payment page par Address ID bhej rahe hain
+    // Send the Address ID to the payment page
     router.push(`/payment?addressId=${selectedAddr}`);
   };
 
